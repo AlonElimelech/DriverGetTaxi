@@ -3,10 +3,12 @@ package com.jct.oshri.drivergettaxi2019;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -30,6 +32,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
+import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
+import com.jct.oshri.drivergettaxi2019.model.datasource.FireBase_DBManager;
+import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +47,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    DB_manager dBase;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -70,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
+        dBase = factoryMethod.getManager();
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -186,18 +194,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            // run check details function
+
+            Driver driver = ((FireBase_DBManager) dBase).checkLogin(email, password);
+            if (driver != null) {
+
+                // open custom window
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);  // go to custom activity (Main activity)
+                intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
+                startActivity(intent);
+
+            }
+            AlertDialog.Builder alert = new AlertDialog.Builder(this).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            alert.setMessage("error login, try again!");
+            alert.show();
+            return;
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -281,15 +305,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void openRegisterActivity(View view) {
-        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
-
-    public void onSignIn(View view) {
-        // run check details function
-        // open custom window
-     }
-
 
     private interface ProfileQuery {
         String[] PROJECTION = {

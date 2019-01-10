@@ -51,6 +51,16 @@ public interface DB_manager {
      * @return List of keys of rides in a maximum amount of payment
      */
     List<String> getRidesByPayment(Driver sDriver);
+
+    public interface Action<T> {
+        void onSuccess(T obj);
+
+        void onFailure(Exception exception);
+
+        void onProgress(String status, double percent);
+    }
+
+
     public interface NotifyDataChange<T> {
         void OnDataChanged(T obj);
 

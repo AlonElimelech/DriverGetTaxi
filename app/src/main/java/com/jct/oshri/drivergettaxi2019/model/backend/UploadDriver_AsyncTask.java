@@ -17,7 +17,7 @@ public class UploadDriver_AsyncTask extends AsyncTask<Driver, Void, Void> {
     protected Void doInBackground(Driver... drivers) {
         final Driver aDrive = drivers[0];
         DatabaseReference driversRef = FirebaseDatabase.getInstance().getReference("Drivers");
-        final int key = aDrive.getId();
+        final String key = aDrive.getId();
         DatabaseReference userDriversRef = driversRef.child(String.valueOf(key));
         ValueEventListener eventListener = new ValueEventListener() {
             @Override

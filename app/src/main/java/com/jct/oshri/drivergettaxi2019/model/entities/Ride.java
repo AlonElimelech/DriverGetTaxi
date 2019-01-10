@@ -10,9 +10,9 @@ public class Ride {
     public String nameOfClient;
     public String phoneNumberOfClient;
     public String emailOfClient;
-    public int id;
+    public String id;
 
-    public Ride(OptionOfTrip oft, String source, String dest, String startTime, String finishTime, String nameOfClient, String phoneNumberOfClient, String emailOfClient,int id) {
+    public Ride(OptionOfTrip oft, String source, String dest, String startTime, String finishTime, String nameOfClient, String phoneNumberOfClient, String emailOfClient,String id) {
         this.status = oft;
         this.source = source;
         this.dest = dest;
@@ -28,11 +28,11 @@ public class Ride {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

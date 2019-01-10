@@ -15,7 +15,6 @@ import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 
 public class RegisterActivity extends AppCompatActivity {
-    DB_manager dBase = factoryMethod.getManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         String firstName = ((EditText) findViewById(R.id.firstName)).getText().toString();
         String LastName = ((EditText) findViewById(R.id.lastName)).getText().toString();
-        int id = Integer.parseInt(((EditText) findViewById(R.id.id)).getText().toString());
+        String id = ((EditText) findViewById(R.id.id)).getText().toString();
         String phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
         String email = ((EditText) findViewById(R.id.email)).getText().toString();
         String creditNumber = ((EditText) findViewById(R.id.creditNumber)).getText().toString();
@@ -44,14 +43,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         Driver driver = new Driver(firstName, LastName, id, phoneNumber, email, creditNumber, password);
 
+        DB_manager dBase = factoryMethod.getManager();
         dBase.addDriver(driver); // sending to DB
 
         Toast toast1 = Toast.makeText(getApplicationContext(), "Sending..", Toast.LENGTH_SHORT);
         toast1.show();
 
-       // Intent intent = new Intent(RegisterActivity.this, MainActivity.class);  // go to custom activity (Main activity)
-        //intent.putExtra("EXTRA_ID_DRIVER", driver.getId());
-      //  startActivity(intent);
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);  // go to custom activity (Main activity)
+        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver",driver);
+        startActivity(intent);
 
     }
 

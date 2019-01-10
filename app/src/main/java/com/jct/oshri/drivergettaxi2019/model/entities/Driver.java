@@ -1,17 +1,19 @@
 package com.jct.oshri.drivergettaxi2019.model.entities;
 
-public class Driver {
+import java.io.Serializable;
 
+public class Driver implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public String firstName;
     public String lastName;
-    public int id;
+    public String id;
     public String phoneNumber;
     public String email;
     public String creditNumber;
     public String password;
 
-    public Driver(String firstName, String lastName, int id, String phoneNumber, String email, String creditNumber,String password) {
+    public Driver(String firstName, String lastName, String id, String phoneNumber, String email, String creditNumber,String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -19,6 +21,9 @@ public class Driver {
         this.email = email;
         this.creditNumber = creditNumber;
         this.password = password;
+    }
+
+    public Driver() {
     }
 
     public String getPassword() {
@@ -45,11 +50,11 @@ public class Driver {
         this.lastName = lastName;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

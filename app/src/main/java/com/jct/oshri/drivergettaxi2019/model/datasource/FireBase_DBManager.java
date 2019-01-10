@@ -1,5 +1,8 @@
 package com.jct.oshri.drivergettaxi2019.model.datasource;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,7 +21,6 @@ import java.util.List;
 public class FireBase_DBManager implements DB_manager {
 
 
-
     static DatabaseReference driversRef;
     static List<Driver> driversList;
 
@@ -26,10 +28,40 @@ public class FireBase_DBManager implements DB_manager {
     static List<Ride> ridesList;
 
     public FireBase_DBManager() {
+
+            notifyToRidesList(new NotifyDataChange<List<Ride>>() {
+                @Override
+                public void OnDataChanged(List<Ride> obj) {
+                    if (ridesList != obj)
+                        ridesList = obj;
+                }
+
+                @Override
+                public void onFailure(Exception exception) {
+
+                }
+            });
+            notifyToDriverList(new NotifyDataChange<List<Driver>>() {
+                @Override
+                public void OnDataChanged(List<Driver> obj) {
+                    if (driversList != obj)
+                        driversList = obj;
+                }
+
+                @Override
+                public void onFailure(Exception exception) {
+
+                }
+            });
+
+
+    }
+
+    static {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        driversRef = database.getReference("drivers");
+        driversRef = database.getReference("Drivers");
         driversList = new ArrayList<>();
-        ridesRef = database.getReference("rides");
+        ridesRef = database.getReference("Rides");
         ridesList = new ArrayList<>();
     }
 
@@ -41,6 +73,7 @@ public class FireBase_DBManager implements DB_manager {
      */
     public void notifyToRidesList(final NotifyDataChange<List<Ride>> notifyDataChange) {
         if (notifyDataChange != null) {
+
             if (RideRefChildEventListener != null) {
                 notifyDataChange.onFailure(new Exception("first unNotify Ride list"));
                 return;
@@ -49,24 +82,23 @@ public class FireBase_DBManager implements DB_manager {
 
             RideRefChildEventListener = new ChildEventListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                     Ride ride = dataSnapshot.getValue(Ride.class);
                     String id = dataSnapshot.getKey();
-                    // Ride.setId(Long.parseLong(id));
+                    //ride.setId(Integer.parseInt(id));
                     ridesList.add(ride);
-
                     notifyDataChange.OnDataChanged(ridesList);
                 }
 
                 @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
                     Ride ride = dataSnapshot.getValue(Ride.class);
-                    int id = Integer.parseInt(dataSnapshot.getKey());
+                    String id =dataSnapshot.getKey();
                     ride.setId(id);
 
 
                     for (int i = 0; i < ridesList.size(); i++) {
-                        if (ridesList.get(i).getId() == id) {
+                        if (ridesList.get(i).getId().equals(id)) {
                             ridesList.set(i, ride);
                             break;
                         }
@@ -76,13 +108,13 @@ public class FireBase_DBManager implements DB_manager {
                 }
 
                 @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     Ride ride = dataSnapshot.getValue(Ride.class);
-                    int id = Integer.parseInt(dataSnapshot.getKey());
+                    String id = dataSnapshot.getKey();
                     ride.setId(id);
 
                     for (int i = 0; i < ridesList.size(); i++) {
-                        if (ridesList.get(i).getId() == id) {
+                        if (ridesList.get(i).getId().equals(id)) {
                             ridesList.remove(i);
                             break;
                         }
@@ -92,11 +124,11 @@ public class FireBase_DBManager implements DB_manager {
                 }
 
                 @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
                     notifyDataChange.onFailure(databaseError.toException());
                 }
             };
@@ -117,7 +149,7 @@ public class FireBase_DBManager implements DB_manager {
 
             DriverRefChildEventListener = new ChildEventListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                     Driver Driver = dataSnapshot.getValue(Driver.class);
                     String id = dataSnapshot.getKey();
                     // Driver.setId(Long.parseLong(id));
@@ -127,14 +159,14 @@ public class FireBase_DBManager implements DB_manager {
                 }
 
                 @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
                     Driver Driver = dataSnapshot.getValue(Driver.class);
-                    int id = Integer.parseInt(dataSnapshot.getKey());
+                    String id = dataSnapshot.getKey();
                     Driver.setId(id);
 
 
                     for (int i = 0; i < driversList.size(); i++) {
-                        if (driversList.get(i).getId() == id) {
+                        if (driversList.get(i).getId().equals(id)) {
                             driversList.set(i, Driver);
                             break;
                         }
@@ -143,13 +175,13 @@ public class FireBase_DBManager implements DB_manager {
                 }
 
                 @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     Driver Driver = dataSnapshot.getValue(Driver.class);
-                    int id = Integer.parseInt(dataSnapshot.getKey());
+                    String id = dataSnapshot.getKey();
                     Driver.setId(id);
 
                     for (int i = 0; i < driversList.size(); i++) {
-                        if (driversList.get(i).getId() == id) {
+                        if (driversList.get(i).getId().equals(id)) {
                             driversList.remove(i);
                             break;
                         }
@@ -158,11 +190,11 @@ public class FireBase_DBManager implements DB_manager {
                 }
 
                 @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
                     notifyDataChange.onFailure(databaseError.toException());
                 }
             };
@@ -173,6 +205,17 @@ public class FireBase_DBManager implements DB_manager {
 
     public void addDriver(final Driver newDriver) {
         new UploadDriver_AsyncTask().execute(newDriver);
+    }
+
+    public Driver checkLogin(String email, String password) {
+        if (ridesList != null)
+            return null;
+        for (Driver driver : driversList) {
+            if (driver.password.equals(password) && driver.email.equals(email))
+                return driver;
+        }
+        return null;
+
     }
 
     @Override
