@@ -5,7 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -71,6 +74,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +86,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
         dBase = factoryMethod.getManager();
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
+
+        if (sharedPreferences.contains("email")) {
+            mEmailView.setText(sharedPreferences.getString("email", null));
+
+        }
+        if (sharedPreferences.contains("password")) {
+            mPasswordView.setText(sharedPreferences.getString("password", null));
+
+        }
+
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener()
+
+        {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -92,15 +112,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+        mEmailSignInButton.setOnClickListener(new
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+                                                      OnClickListener() {
+                                                          @Override
+                                                          public void onClick(View view) {
+                                                              attemptLogin();
+                                                          }
+                                                      });
+
+        mLoginFormView =
+
+                findViewById(R.id.login_form);
+
+        mProgressView =
+
+                findViewById(R.id.login_progress);
+
+
     }
 
     private void populateAutoComplete() {
@@ -191,29 +220,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            // run check details function
-
             Driver driver = ((FireBase_DBManager) dBase).checkLogin(email, password);
             if (driver != null) {
+
+                editor.putString("email", email);
+                editor.putString("password", password);
+                editor.commit();
 
                 // open custom window
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);  // go to custom activity (Main activity)
                 intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
                 startActivity(intent);
+                return;
 
             }
-            AlertDialog.Builder alert = new AlertDialog.Builder(this).setNeutralButton("OK", new DialogInterface.OnClickListener() {
 
+            AlertDialog.Builder alert = new AlertDialog.Builder(this).setNeutralButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                 }
             });
             alert.setMessage("error login, try again!");
             alert.show();
-            return;
+
         }
     }
 
@@ -222,7 +251,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() > 2;
     }
 
     /**

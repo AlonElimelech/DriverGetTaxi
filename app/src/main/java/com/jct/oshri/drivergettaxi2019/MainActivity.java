@@ -1,5 +1,6 @@
 package com.jct.oshri.drivergettaxi2019;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,13 +14,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Driver driver;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +32,12 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Intent myIntent = getIntent();
-        Driver driver = (Driver) myIntent.getSerializableExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver");
+        driver = (Driver) myIntent.getSerializableExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver");
 
+       // EditText name = (EditText)(findViewById(R.id.textView_name));
+       // name.setText(driver.firstName + " " + driver.lastName);
+       // EditText email = (EditText)(findViewById(R.id.textView_email));
+        //email.setText(driver.email);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -208,8 +208,6 @@ public class FireBase_DBManager implements DB_manager {
     }
 
     public Driver checkLogin(String email, String password) {
-        if (ridesList != null)
-            return null;
         for (Driver driver : driversList) {
             if (driver.password.equals(password) && driver.email.equals(email))
                 return driver;
