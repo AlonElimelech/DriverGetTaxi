@@ -1,6 +1,5 @@
 package com.jct.oshri.drivergettaxi2019;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 
@@ -23,21 +22,14 @@ public class MainActivity extends AppCompatActivity
 
     Driver driver;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Intent myIntent = getIntent();
         driver = (Driver) myIntent.getSerializableExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver");
-
-       // EditText name = (EditText)(findViewById(R.id.textView_name));
-       // name.setText(driver.firstName + " " + driver.lastName);
-       // EditText email = (EditText)(findViewById(R.id.textView_email));
-        //email.setText(driver.email);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +46,21 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        String upperFirstName = driver.firstName.substring(0,1).toUpperCase() + driver.firstName.substring(1);
+        String upperLastName = driver.lastName.substring(0,1).toUpperCase() + driver.lastName.substring(1);
+
+        setTitle("Welcome"+" "+upperFirstName);
+
+        View header_nav = navigationView.getHeaderView(0);
+
+        TextView name = header_nav.findViewById(R.id.textView_name);
+        name.setText(upperFirstName+" "+upperLastName);
+
+
+
     }
 
     @Override
@@ -96,17 +101,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_personal_zone) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_my_rides) {
 
         }
 
