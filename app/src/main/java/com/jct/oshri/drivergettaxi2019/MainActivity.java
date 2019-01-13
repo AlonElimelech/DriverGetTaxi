@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -102,9 +103,23 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_personal_zone) {
-            // Handle the camera action
+            setTitle(driver.firstName+ " zone");
+            UpdateDataFragment fragment = new UpdateDataFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram,fragment);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_my_rides) {
-
+            setTitle("my Rides");
+            MyRidesFragment fragment = new MyRidesFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram,fragment);
+            fragmentTransaction.commit();
+        } else if (id == R.id.nav_waiting_rides){
+            setTitle("Waiting Rides");
+            WaitingRidesFragment fragment = new WaitingRidesFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram,fragment);
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
