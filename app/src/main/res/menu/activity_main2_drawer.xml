@@ -15,7 +15,12 @@
         <item
             android:id="@+id/nav_waiting_rides"
             android:icon="@drawable/waiting_rides"
-            android:title="waiting_rides" />
+            android:title="Waiting rides" />
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Exit" />
 
     </group>
 

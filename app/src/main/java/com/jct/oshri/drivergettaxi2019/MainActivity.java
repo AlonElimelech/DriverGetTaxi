@@ -32,14 +32,6 @@ public class MainActivity extends AppCompatActivity
         Intent myIntent = getIntent();
         driver = (Driver) myIntent.getSerializableExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -103,8 +95,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_personal_zone) {
-            setTitle(driver.firstName+ " zone");
+            String upperFirstName = driver.firstName.substring(0,1).toUpperCase() + driver.firstName.substring(1);
+            setTitle(upperFirstName+ " zone");
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Driver",driver);
+
             UpdateDataFragment fragment = new UpdateDataFragment();
+            fragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram,fragment);
             fragmentTransaction.commit();
@@ -120,6 +117,11 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram,fragment);
             fragmentTransaction.commit();
+
+        }else if (id == R.id.nav_exit) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);  // go to custom activity (Main activity)
+            intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver",driver);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

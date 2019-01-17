@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -51,6 +52,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     DB_manager dBase;
+    AlphaAnimation a =new  AlphaAnimation(1F,0.8F);
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -117,6 +119,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                       OnClickListener() {
                                                           @Override
                                                           public void onClick(View view) {
+                                                              view.startAnimation(a);
                                                               attemptLogin();
                                                           }
                                                       });
@@ -334,6 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void openRegisterActivity(View view) {
+        view.startAnimation(a);
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

@@ -63,8 +63,22 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/yellow2"
-            android:onClick="onClick"
+            android:onClick="onUpdate"
             android:text="update" />
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="125dp"
+            android:layout_height="71dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/yellow2"
+            android:onClick="onCancel"
+            android:text="cancel" />
+
+
+
+
 
     </LinearLayout>
 

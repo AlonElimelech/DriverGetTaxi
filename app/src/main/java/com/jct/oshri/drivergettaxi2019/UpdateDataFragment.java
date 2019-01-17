@@ -9,12 +9,14 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
 import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
+import com.jct.oshri.drivergettaxi2019.model.datasource.FireBase_DBManager;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 
 
@@ -22,12 +24,18 @@ import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
  * A simple {@link Fragment} subclass.
  */
 public class UpdateDataFragment extends Fragment {
+    Driver driver;
+    String phoneNumber;
+    String email;
+    String creditNumber;
+    String password;
+    AlphaAnimation a =new  AlphaAnimation(1F,0.8F);
+
 
 
     public UpdateDataFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,20 +43,49 @@ public class UpdateDataFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_update_data, container, false);
-        Button button = (Button) view.findViewById(R.id.button_update);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        Button buttonUpdate = (Button) view.findViewById(R.id.button_update);
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                onUpgrade(v);
+            public void onClick(View v) {
+                onUpdate(v);
             }
         });
+
+        Button buttonCancel = (Button) view.findViewById(R.id.button_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCancel(v);
+            }
+        });
+
+
+        driver = (Driver) (getArguments().getSerializable("Driver"));
+        EditText phoneNumber = view.findViewById(R.id.phoneNumber);
+        EditText email = view.findViewById(R.id.email);
+        EditText creditNumber = view.findViewById(R.id.creditNumber);
+        EditText password = view.findViewById(R.id.password);
+
+        phoneNumber.setText(driver.phoneNumber);
+        email.setText(driver.email);
+        creditNumber.setText(driver.creditNumber);
+        password.setText(driver.password);
+
         return view;
+
+
+    }
+
+    private void onCancel(View view) {
+        view.startAnimation(a);
+        Intent intent = new Intent(getActivity(), MainActivity.class);  // go to custom activity (Main activity)
+        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver",driver);
+        startActivity(intent);
     }
 
 
-    public void onUpgrade(View view) {
+    public void onUpdate(View view) {
+        view.startAnimation(a);
         // check inputs - all attributes filled
         if (!isValidated()) return;
 
@@ -56,21 +93,23 @@ public class UpdateDataFragment extends Fragment {
         toast.show();
 
 
-        String phoneNumber = ((EditText)getView().findViewById(R.id.phoneNumber)).getText().toString();
-        String email = ((EditText) getView().findViewById(R.id.email)).getText().toString();
-        String creditNumber = ((EditText) getView().findViewById(R.id.creditNumber)).getText().toString();
-        String password = ((EditText) getView().findViewById(R.id.password)).getText().toString();
+         phoneNumber = ((EditText) getView().findViewById(R.id.phoneNumber)).getText().toString();
+         email = ((EditText) getView().findViewById(R.id.email)).getText().toString();
+         creditNumber = ((EditText) getView().findViewById(R.id.creditNumber)).getText().toString();
+         password = ((EditText) getView().findViewById(R.id.password)).getText().toString();
 
-        //Driver driver = new Driver(firstName, LastName, id, phoneNumber, email, creditNumber, password);
+         Driver newDriver = new Driver(driver.firstName, driver.lastName, driver.id, phoneNumber, email, creditNumber, password);
 
-        //DB_manager dBase = factoryMethod.getManager();
-        //dBase.addDriver(driver); // sending to DB
+        DB_manager dBase = factoryMethod.getManager();
 
-        Toast toast1 = Toast.makeText(getActivity(), "Sending..", Toast.LENGTH_SHORT);
+        ((FireBase_DBManager)dBase).updateDriver(newDriver); // sending to DB
+
+        Toast toast1 = Toast.makeText(getActivity(), "Updating..", Toast.LENGTH_SHORT);
         toast1.show();
 
 
     }
+
     private boolean isValidated() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -79,9 +118,6 @@ public class UpdateDataFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-
-
-
 
 
         if (((EditText) getView().findViewById(R.id.phoneNumber)).getText().toString().length() == 0) {

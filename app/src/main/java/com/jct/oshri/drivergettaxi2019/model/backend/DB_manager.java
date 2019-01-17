@@ -52,7 +52,10 @@ public interface DB_manager {
      */
     List<String> getRidesByPayment(Driver sDriver);
 
-    public interface Action<T> {
+    List<Ride> getUnoccupiedRidesToSomeCity(String city);
+
+
+        public interface Action<T> {
         void onSuccess(T obj);
 
         void onFailure(Exception exception);

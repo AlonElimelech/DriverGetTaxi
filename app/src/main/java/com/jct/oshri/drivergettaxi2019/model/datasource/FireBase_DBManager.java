@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
+import com.jct.oshri.drivergettaxi2019.model.backend.UpdateDriver_AsyncTask;
 import com.jct.oshri.drivergettaxi2019.model.backend.UploadDriver_AsyncTask;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.OptionOfTrip;
@@ -207,6 +208,11 @@ public class FireBase_DBManager implements DB_manager {
         new UploadDriver_AsyncTask().execute(newDriver);
     }
 
+    public void updateDriver(final Driver newDriver) {
+        new UpdateDriver_AsyncTask().execute(newDriver);
+    }
+
+
     public Driver checkLogin(String email, String password) {
         for (Driver driver : driversList) {
             if (driver.password.equals(password) && driver.email.equals(email))
@@ -230,6 +236,15 @@ public class FireBase_DBManager implements DB_manager {
         List<Ride> unoccupiedRides = new ArrayList<>();
         for (Ride ride : ridesList) {
             if (ride.status == OptionOfTrip.UNOCCUPIED)
+                unoccupiedRides.add(ride);
+        }
+        return unoccupiedRides;
+    }
+    @Override
+    public List<Ride> getUnoccupiedRidesToSomeCity(String city) {
+        List<Ride> unoccupiedRides = new ArrayList<>();
+        for (Ride ride : ridesList) {
+            if (ride.status == OptionOfTrip.UNOCCUPIED && ride.dest.equals(city))
                 unoccupiedRides.add(ride);
         }
         return unoccupiedRides;

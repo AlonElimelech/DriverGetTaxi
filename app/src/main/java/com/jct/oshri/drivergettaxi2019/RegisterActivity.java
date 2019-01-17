@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    AlphaAnimation a =new  AlphaAnimation(1F,0.8F);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +26,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onCancel(View view) {
+        view.startAnimation(a);
         finish();
     }
 
     public void onSignUp(View view) {
+        view.startAnimation(a);
         // check inputs - all attributes filled
         if (!isValidated()) return;
 
