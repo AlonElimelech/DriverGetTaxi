@@ -42,16 +42,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        String upperFirstName = driver.firstName.substring(0,1).toUpperCase() + driver.firstName.substring(1);
-        String upperLastName = driver.lastName.substring(0,1).toUpperCase() + driver.lastName.substring(1);
+        String upperFirstName = driver.firstName.substring(0, 1).toUpperCase() + driver.firstName.substring(1);
+        String upperLastName = driver.lastName.substring(0, 1).toUpperCase() + driver.lastName.substring(1);
 
-        setTitle("Welcome"+" "+upperFirstName);
+        setTitle("Welcome" + " " + upperFirstName);
 
         View header_nav = navigationView.getHeaderView(0);
 
         TextView name = header_nav.findViewById(R.id.textView_name);
-        name.setText(upperFirstName+" "+upperLastName);
-
+        name.setText(upperFirstName + " " + upperLastName);
 
 
     }
@@ -95,32 +94,32 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_personal_zone) {
-            String upperFirstName = driver.firstName.substring(0,1).toUpperCase() + driver.firstName.substring(1);
-            setTitle(upperFirstName+ " zone");
+            String upperFirstName = driver.firstName.substring(0, 1).toUpperCase() + driver.firstName.substring(1);
+            setTitle(upperFirstName + " zone");
             Bundle bundle = new Bundle();
-            bundle.putSerializable("Driver",driver);
+            bundle.putSerializable("Driver", driver);
 
             UpdateDataFragment fragment = new UpdateDataFragment();
             fragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fram,fragment);
+            fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_my_rides) {
             setTitle("my Rides");
             MyRidesFragment fragment = new MyRidesFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fram,fragment);
+            fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_waiting_rides){
+        } else if (id == R.id.nav_waiting_rides) {
             setTitle("Waiting Rides");
             WaitingRidesFragment fragment = new WaitingRidesFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fram,fragment);
+            fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();
 
-        }else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_exit) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);  // go to custom activity (Main activity)
-            intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver",driver);
+            intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
             startActivity(intent);
         }
 

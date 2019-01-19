@@ -11,10 +11,9 @@ public class Ride {
     public String phoneNumberOfClient;
     public String emailOfClient;
     public String id;
-    public String driverId;
 
 
-    public Ride(OptionOfTrip oft, String source, String dest, String startTime, String finishTime, String nameOfClient, String phoneNumberOfClient, String emailOfClient, String id, String driverId) {
+    public Ride(OptionOfTrip oft, String source, String dest, String startTime, String finishTime, String nameOfClient, String phoneNumberOfClient, String emailOfClient, String id) {
         this.status = oft;
         this.source = source;
         this.dest = dest;
@@ -23,21 +22,13 @@ public class Ride {
         this.nameOfClient = nameOfClient;
         this.phoneNumberOfClient = phoneNumberOfClient;
         this.emailOfClient = emailOfClient;
-         this.id=id;
-         this.driverId = driverId;
+        this.id = id;
     }
 
     public Ride() {
 
     }
 
-    public String getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
-    }
 
     public String getId() {
         return id;

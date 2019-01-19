@@ -17,7 +17,7 @@ import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    AlphaAnimation a =new  AlphaAnimation(1F,0.8F);
+    AlphaAnimation a = new AlphaAnimation(1F, 0.8F);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         toast1.show();
 
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);  // go to custom activity (Main activity)
-        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver",driver);
+        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
         startActivity(intent);
 
     }

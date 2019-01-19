@@ -8,8 +8,8 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ListView
+        android:id="@+id/waiting_list"
         android:layout_width="match_parent"
-        android:layout_height="313dp"
-        android:id="@+id/waiting_list"/>
+        android:layout_height="313dp" />
 
 </FrameLayout>

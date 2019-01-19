@@ -52,7 +52,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     DB_manager dBase;
-    AlphaAnimation a =new  AlphaAnimation(1F,0.8F);
+    AlphaAnimation a = new AlphaAnimation(1F, 0.8F);
     /**
      * Id to identity READ_CONTACTS permission request.
      */
