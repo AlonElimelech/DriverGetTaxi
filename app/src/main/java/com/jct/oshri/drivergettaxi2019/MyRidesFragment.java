@@ -20,8 +20,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class MyRidesFragment extends Fragment {
-    Ride rides;
-    DB_manager dBase;
+
 
     public MyRidesFragment() {
         // Required empty public constructor
@@ -33,10 +32,7 @@ public class MyRidesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_rides, container, false);
-        dBase = factoryMethod.getManager();
-        List<Ride> unOccupiedRide = ((FireBase_DBManager)dBase).getUnoccupiedRides();
 
-        ListView listRides = view.findViewById(R.id.ride_list);
 
         return view;
     }
