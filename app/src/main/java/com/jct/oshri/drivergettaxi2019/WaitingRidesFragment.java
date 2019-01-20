@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
+import com.jct.oshri.drivergettaxi2019.model.datasource.FireBase_DBManager;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
 import java.util.ArrayList;
@@ -32,19 +33,24 @@ import java.util.List;
 public class WaitingRidesFragment extends Fragment {
 
 
-    ListView listRides;
+    ListView alistView;
+    List<Ride> ridesList = new ArrayList<>();
     View v;
     ProgressDialog progress;
-    List<String> dataSet = new ArrayList<String>();
-    List<String> mDataKey = new ArrayList();
+    AdapterListRides adapter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_waiting_rides, container, false);
-        return view;
+         v = inflater.inflate(R.layout.fragment_waiting_rides, container, false);
+
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
+        alistView.setAdapter(adapter);
+        getActivity().setTitle("Search new ride please");
+
+        return v;
     }
 
     @Override
@@ -61,9 +67,11 @@ public class WaitingRidesFragment extends Fragment {
     }
 
     private void init() {
-        listRides = v.findViewById(R.id.waiting_listView);
-        DatabaseReference dBase = FirebaseDatabase.getInstance().getReference().child("Rides");
+        alistView = v.findViewById(R.id.waiting_listView);
+        ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
+        /*
         dBase.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 dataSet.clear();
@@ -82,7 +90,8 @@ public class WaitingRidesFragment extends Fragment {
             }
         });
     }
-
+*/
+    }
     private void loaddata() {
     }
 
