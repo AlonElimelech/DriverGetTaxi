@@ -46,6 +46,8 @@ public class WaitingRidesFragment extends Fragment {
         // Inflate the layout for this fragment
          v = inflater.inflate(R.layout.fragment_waiting_rides, container, false);
 
+        alistView = v.findViewById(R.id.waiting_listView);
+        ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
         alistView.setAdapter(adapter);
         getActivity().setTitle("Search new ride please");
@@ -53,6 +55,7 @@ public class WaitingRidesFragment extends Fragment {
         return v;
     }
 
+    /*
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,7 +94,6 @@ public class WaitingRidesFragment extends Fragment {
         });
     }
 */
-    }
     private void loaddata() {
     }
 

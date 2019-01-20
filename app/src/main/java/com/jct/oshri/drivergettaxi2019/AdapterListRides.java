@@ -101,7 +101,7 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
 // create a FragmentTransaction to begin the transaction and replace the Fragment
                 FragmentTransaction fragmentTransaction = afragment.beginTransaction();
 // replace the FrameLayout with new Fragment
-                fragmentTransaction.replace(R.id.TravelFragment_frame, f);
+                fragmentTransaction.replace(R.id.fram, f);
                 fragmentTransaction.commit(); // save the changes
 
 
