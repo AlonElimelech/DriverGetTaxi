@@ -69,7 +69,6 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
             // Now we can fill the layout with the right values
             holder = new RideHolder();
             holder.nameCustomer = (TextView) v.findViewById(R.id.fullNameCustomer);
-            holder.distanceRide = (TextView) v.findViewById(R.id.distanceRide);
             holder.timeRide = (TextView) v.findViewById(R.id.timeRide);
             holder.buttonRide=(Button) v.findViewById(R.id.InfoBt);
 
@@ -79,7 +78,6 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
 
         holder.nameCustomer.setText("Name: "+ridesList.get(position).getNameOfClient());
         holder.timeRide.setText("Time: "+ridesList.get(position).getStartTime());
-        holder.distanceRide.setText("Distance: 10 +km");
         holder.buttonRide.setTag(R.integer.bRide_view, convertView);
         holder.buttonRide.setTag(R.integer.bRide_position, position);
         holder.buttonRide.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +110,6 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
     private static class RideHolder {
         public TextView nameCustomer;
         public TextView timeRide;
-        public TextView distanceRide;
         public Button buttonRide;
     }
 

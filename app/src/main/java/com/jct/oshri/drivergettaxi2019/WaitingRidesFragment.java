@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,20 +42,38 @@ public class WaitingRidesFragment extends Fragment {
     AdapterListRides adapter;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          v = inflater.inflate(R.layout.fragment_waiting_rides, container, false);
 
+        Button buttonFilter = (Button) v.findViewById(R.id.filter_button);
+        buttonFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFilterClick(v);
+            }
+        });
+
         alistView = v.findViewById(R.id.waiting_listView);
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
 
-        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
-        alistView.setAdapter(adapter);
-        getActivity().setTitle("Search new ride please");
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());alistView.setAdapter(adapter);
+        getActivity().setTitle("Choose a ride");
 
         return v;
+    }
+
+    private void onFilterClick(View v) {
+        EditText d = (EditText)getView().findViewById(R.id.distance);
+        double distance =Double.parseDouble(d.getText().toString());
+        ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRidesByDistance("jerusalem",distance,this);
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
+        alistView.setAdapter(adapter);
+        getActivity().setTitle("Choose a ride");
+
     }
 
     /*
