@@ -2,10 +2,12 @@ package com.jct.oshri.drivergettaxi2019;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
+import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,7 @@ public class WaitingRidesFragment extends Fragment {
     }
 
     private void init() {
-        listRides = v.findViewById(R.id.waiting_list);
+        listRides = v.findViewById(R.id.waiting_listView);
         DatabaseReference dBase = FirebaseDatabase.getInstance().getReference().child("Rides");
         dBase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -85,5 +88,32 @@ public class WaitingRidesFragment extends Fragment {
 
     public WaitingRidesFragment() {
         // Required empty public constructor
+    }
+
+    private class AdapterListRides extends ArrayAdapter<Ride> {
+
+        private Context context;
+        public List<Ride> ls;
+        private FragmentManager fm;
+
+        public AdapterListRides(List<Ride> unoccupiedRides, Context context, FragmentManager childFragmentManager) {
+            super(context, R.layout.fragment_waiting_rides, unoccupiedRides);
+            this.context = context;
+            ls = unoccupiedRides;
+            this.fm = childFragmentManager;
+        }
+
+        @Override
+        public int getCount() {
+            return ls.size();
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return Long.parseLong(mDataKey.get(position));
+        }
+
+
     }
 }
