@@ -1,14 +1,16 @@
 package com.jct.oshri.drivergettaxi2019.model.datasource;
 
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.jct.oshri.drivergettaxi2019.WaitingRidesFragment;
 import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
 import com.jct.oshri.drivergettaxi2019.model.backend.UpdateDriver_AsyncTask;
 import com.jct.oshri.drivergettaxi2019.model.backend.UploadDriver_AsyncTask;
@@ -19,6 +21,7 @@ import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FireBase_DBManager implements DB_manager {
 
 
@@ -28,32 +31,39 @@ public class FireBase_DBManager implements DB_manager {
     static DatabaseReference ridesRef;
     static List<Ride> ridesList;
 
+    // variables for distance
+    Geocoder coder;
+    List<Address> address;
+    Location locationA = new Location("A");//= new Location(from);
+    Location locationB = new Location("B");//= new Location(to);
+
+
     public FireBase_DBManager() {
 
-            notifyToRidesList(new NotifyDataChange<List<Ride>>() {
-                @Override
-                public void OnDataChanged(List<Ride> obj) {
-                    if (ridesList != obj)
-                        ridesList = obj;
-                }
+        notifyToRidesList(new NotifyDataChange<List<Ride>>() {
+            @Override
+            public void OnDataChanged(List<Ride> obj) {
+                if (ridesList != obj)
+                    ridesList = obj;
+            }
 
-                @Override
-                public void onFailure(Exception exception) {
+            @Override
+            public void onFailure(Exception exception) {
 
-                }
-            });
-            notifyToDriverList(new NotifyDataChange<List<Driver>>() {
-                @Override
-                public void OnDataChanged(List<Driver> obj) {
-                    if (driversList != obj)
-                        driversList = obj;
-                }
+            }
+        });
+        notifyToDriverList(new NotifyDataChange<List<Driver>>() {
+            @Override
+            public void OnDataChanged(List<Driver> obj) {
+                if (driversList != obj)
+                    driversList = obj;
+            }
 
-                @Override
-                public void onFailure(Exception exception) {
+            @Override
+            public void onFailure(Exception exception) {
 
-                }
-            });
+            }
+        });
 
 
     }
@@ -94,7 +104,7 @@ public class FireBase_DBManager implements DB_manager {
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
                     Ride ride = dataSnapshot.getValue(Ride.class);
-                    String id =dataSnapshot.getKey();
+                    String id = dataSnapshot.getKey();
                     ride.setId(id);
 
 
@@ -240,6 +250,7 @@ public class FireBase_DBManager implements DB_manager {
         }
         return unoccupiedRides;
     }
+
     @Override
     public List<Ride> getUnoccupiedRidesToSomeCity(String city) {
         List<Ride> unoccupiedRides = new ArrayList<>();
@@ -270,10 +281,6 @@ public class FireBase_DBManager implements DB_manager {
         return null;
     }
 
-    @Override
-    public List<String> getUnoccupiedRidesByDistance(String location, double maxDistance) {
-        return null;
-    }
 
     @Override
     public List<String> getRidesByDate(Driver sDriver) {
@@ -283,6 +290,49 @@ public class FireBase_DBManager implements DB_manager {
     @Override
     public List<String> getRidesByPayment(Driver sDriver) {
         return null;
+    }
+
+    @Override
+    public List<Ride> getUnoccupiedRidesByDistance(String driverLocation, double maxDistance, WaitingRidesFragment frag) {
+        coder = new Geocoder(frag.getContext());
+        List<Ride> resultRides = new ArrayList<>();
+
+        for (Ride ride : ridesList) {
+            if (ride.status == OptionOfTrip.UNOCCUPIED)
+                if (getDistance(driverLocation, ride.getSource()) <= maxDistance)
+                    resultRides.add(ride);
+        }
+        return resultRides;
+    }
+
+    /**
+     * @param address1 - from
+     * @param address2 - to
+     * @return the distance in kilometers!
+     */
+    private float getDistance(String address1, String address2) {
+        try {
+            address = coder.getFromLocationName(address1, 1);
+            if (address != null) {
+                Address location = address.get(0);
+                locationA.setLatitude(location.getLatitude());
+                locationA.setLongitude(location.getLongitude());
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            address = coder.getFromLocationName(address2, 1);
+            if (address != null) {
+                Address location = address.get(0);
+                locationB.setLatitude(location.getLatitude());
+                locationB.setLongitude(location.getLongitude());
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+
+        return (locationA.distanceTo(locationB)) / 1000;
     }
 
 }

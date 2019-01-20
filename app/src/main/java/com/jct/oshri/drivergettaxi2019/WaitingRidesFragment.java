@@ -48,6 +48,7 @@ public class WaitingRidesFragment extends Fragment {
 
         alistView = v.findViewById(R.id.waiting_listView);
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
+
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
         alistView.setAdapter(adapter);
         getActivity().setTitle("Search new ride please");

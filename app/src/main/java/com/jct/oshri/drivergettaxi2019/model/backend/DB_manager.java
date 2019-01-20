@@ -1,5 +1,6 @@
 package com.jct.oshri.drivergettaxi2019.model.backend;
 
+import com.jct.oshri.drivergettaxi2019.WaitingRidesFragment;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
@@ -40,7 +41,7 @@ public interface DB_manager {
     /**
      * @return List of keys of unoccupied rides in a specific distance from a Driver's location
      */
-    List<String> getUnoccupiedRidesByDistance(String location, double maxDistance);
+    List<Ride> getUnoccupiedRidesByDistance(String driverLocation, double maxDistance, WaitingRidesFragment waitingRidesFragment);
 
     /**
      * @return List of keys of rides by a date
