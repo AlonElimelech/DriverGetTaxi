@@ -91,11 +91,8 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
                 Integer pos = (Integer)holder.buttonRide.getTag(R.integer.bRide_position);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("StartLocation",ridesList.get(pos).getSource());
-                bundle.putString("EndLocation", ridesList.get(pos).getDest());
-                bundle.putString("Time", ridesList.get(pos).getStartTime());
-                bundle.putString("PhoneNumber", ridesList.get(pos).getPhoneNumberOfClient());
-                bundle.putInt("position", position);
+
+                bundle.putSerializable("Ride",ridesList.get(pos));
                 f.setArguments(bundle);
 
 // create a FragmentTransaction to begin the transaction and replace the Fragment

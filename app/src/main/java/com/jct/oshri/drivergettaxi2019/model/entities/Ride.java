@@ -1,6 +1,9 @@
 package com.jct.oshri.drivergettaxi2019.model.entities;
 
-public class Ride {
+import java.io.Serializable;
+
+public class Ride implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public OptionOfTrip status;
     public String source;
