@@ -90,30 +90,4 @@ public class WaitingRidesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private class AdapterListRides extends ArrayAdapter<Ride> {
-
-        private Context context;
-        public List<Ride> ls;
-        private FragmentManager fm;
-
-        public AdapterListRides(List<Ride> unoccupiedRides, Context context, FragmentManager childFragmentManager) {
-            super(context, R.layout.fragment_waiting_rides, unoccupiedRides);
-            this.context = context;
-            ls = unoccupiedRides;
-            this.fm = childFragmentManager;
-        }
-
-        @Override
-        public int getCount() {
-            return ls.size();
-        }
-
-
-        @Override
-        public long getItemId(int position) {
-            return Long.parseLong(mDataKey.get(position));
-        }
-
-
-    }
 }
