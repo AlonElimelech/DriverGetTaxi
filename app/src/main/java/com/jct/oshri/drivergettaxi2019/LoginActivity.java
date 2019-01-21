@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+        checkPermissions();
         dBase = factoryMethod.getManager();
         mPasswordView = (EditText) findViewById(R.id.password);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -129,7 +130,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        checkPermissions();
     }
 
     private void checkPermissions() {

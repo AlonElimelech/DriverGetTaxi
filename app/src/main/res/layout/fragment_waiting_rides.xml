@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,14 +16,35 @@
         android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/filter_button"
+        android:layout_below="@+id/locationButton"
         android:hint="e.g 10 (km)" />
 
     <Button
         android:id="@+id/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/locationButton"
         android:onClick="onFilterClick"
         android:text="Filter by Distance" />
 
+    <ImageButton
+        android:id="@+id/locationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/waiting_listView"
+        android:onClick="locationButton_click"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/curLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waiting_listView"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/locationButton"
+        android:text="Pick your address"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
