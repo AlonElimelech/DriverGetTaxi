@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jct.oshri.drivergettaxi2019.model.entities.OptionOfTrip;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
+
 
 public class TakeRideActivity extends AppCompatActivity {
 
@@ -18,6 +20,7 @@ public class TakeRideActivity extends AppCompatActivity {
     TextView phone;
     //String SendSMSDEST;
     Button takeButton;
+    Ride r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +31,17 @@ public class TakeRideActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void findViews() {
 
         Intent myIntent = getIntent();
-        Ride r = (Ride) myIntent.getSerializableExtra("Ride");
+        r = (Ride) myIntent.getSerializableExtra("Ride");
         name = findViewById(R.id.name_cus);
-        name.setText(r.nameOfClient);
+        name.setText("Name: " + r.nameOfClient);
 
         email = findViewById(R.id.email_cus);
-        email.setText(r.emailOfClient);
+        email.setText("Email: " + r.emailOfClient);
         phone = findViewById(R.id.phone_cus);
-        phone.setText(r.phoneNumberOfClient);
+        phone.setText("Phone NUmber: " + r.phoneNumberOfClient);
 
         takeButton = findViewById(R.id.TakeItButton);
         //SendSMSDEST = bundle.getString("PhoneNumber").toString();
@@ -51,10 +51,11 @@ public class TakeRideActivity extends AppCompatActivity {
 
             public void onClick(View v) {
 
+                onTakeIt(v);
+
                 //SmsManager smsManager = SmsManager.getDefault();
                 // smsManager.sendTextMessage(SendSMSDEST, null, "Hello,Im your driver and I ready to give a service to you. I LOVE YOU!", null, null);
-                Toast.makeText(getApplicationContext(), " Sent!",
-                        Toast.LENGTH_LONG).show();
+
 
                 /*
                 new AsyncTask<Void, Void, String>() {
@@ -95,7 +96,13 @@ public class TakeRideActivity extends AppCompatActivity {
     }
 
 
-    public void onClick(View view) {
+    public void onTakeIt(View view) {
+        Toast.makeText(getApplicationContext(), " Sent!",
+                Toast.LENGTH_LONG).show();
+        r.setStatus(OptionOfTrip.IN_PROGGRESS);
+
+
     }
+
 }
 

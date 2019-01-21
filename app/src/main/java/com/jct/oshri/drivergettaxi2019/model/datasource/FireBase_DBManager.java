@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.jct.oshri.drivergettaxi2019.WaitingRidesFragment;
 import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
 import com.jct.oshri.drivergettaxi2019.model.backend.UpdateDriver_AsyncTask;
+import com.jct.oshri.drivergettaxi2019.model.backend.UpdateRide_AsyncTask;
 import com.jct.oshri.drivergettaxi2019.model.backend.UploadDriver_AsyncTask;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.OptionOfTrip;
@@ -213,6 +214,11 @@ public class FireBase_DBManager implements DB_manager {
         }
     }
 
+
+
+    public void updateRide(final Ride newRide) {
+        new UpdateRide_AsyncTask().execute(newRide);
+    }
 
     public void addDriver(final Driver newDriver) {
         new UploadDriver_AsyncTask().execute(newDriver);
