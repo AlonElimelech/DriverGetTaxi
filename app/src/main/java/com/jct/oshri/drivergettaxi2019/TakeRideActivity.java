@@ -1,75 +1,59 @@
 package com.jct.oshri.drivergettaxi2019;
 
-
-import android.annotation.SuppressLint;
-import android.app.FragmentManager;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
+public class TakeRideActivity extends AppCompatActivity {
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class RideRequestFragment extends Fragment {
-
-    View v;
+    //View v;
     TextView name;
     TextView email;
     TextView phone;
-    String SendSMSDEST;
-    Button SendingSms;
-
-    public RideRequestFragment() {
-        // Required empty public constructor
-    }
-
+    //String SendSMSDEST;
+    Button takeButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_ride_request, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_take_ride);
 
         findViews();
-
-        return v;
     }
+
+
+
+
 
     private void findViews() {
 
-        Bundle bundle = this.getArguments();
-        Ride r = (Ride) bundle.getSerializable("Ride");
-        name = v.findViewById(R.id.fullName_customer);
+        Intent myIntent = getIntent();
+        Ride r = (Ride) myIntent.getSerializableExtra("Ride");
+        name = findViewById(R.id.name_cus);
         name.setText(r.nameOfClient);
 
-        email = v.findViewById(R.id.email_customer);
+        email = findViewById(R.id.email_cus);
         email.setText(r.emailOfClient);
-        phone = v.findViewById(R.id.phoneNumber_customer);
+        phone = findViewById(R.id.phone_cus);
         phone.setText(r.phoneNumberOfClient);
 
-        SendingSms = v.findViewById(R.id.TakeItButton);
-        SendSMSDEST = bundle.getString("PhoneNumber").toString();
+        takeButton = findViewById(R.id.TakeItButton);
+        //SendSMSDEST = bundle.getString("PhoneNumber").toString();
 
 
-        SendingSms.setOnClickListener(new View.OnClickListener() {
+        takeButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
                 //SmsManager smsManager = SmsManager.getDefault();
                 // smsManager.sendTextMessage(SendSMSDEST, null, "Hello,Im your driver and I ready to give a service to you. I LOVE YOU!", null, null);
-                Toast.makeText(getContext(), " Sent!",
+                Toast.makeText(getApplicationContext(), " Sent!",
                         Toast.LENGTH_LONG).show();
 
                 /*
@@ -111,4 +95,7 @@ public class RideRequestFragment extends Fragment {
     }
 
 
+    public void onClick(View view) {
+    }
 }
+

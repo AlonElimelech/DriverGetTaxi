@@ -2,25 +2,15 @@ package com.jct.oshri.drivergettaxi2019;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
 import com.jct.oshri.drivergettaxi2019.model.datasource.FireBase_DBManager;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
@@ -60,7 +50,8 @@ public class WaitingRidesFragment extends Fragment {
         alistView = v.findViewById(R.id.waiting_listView);
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
 
-        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());alistView.setAdapter(adapter);
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
+        alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
 
         return v;
@@ -73,6 +64,7 @@ public class WaitingRidesFragment extends Fragment {
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
+        progress.dismiss();
 
     }
 
