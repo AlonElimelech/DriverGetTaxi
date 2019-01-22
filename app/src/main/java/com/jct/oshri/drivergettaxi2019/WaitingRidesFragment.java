@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class WaitingRidesFragment extends Fragment {
         Intent myIntent = getActivity().getIntent();
         driver = (Driver) myIntent.getSerializableExtra("Driver");
 
-        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(),driver);
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(), driver);
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
 
@@ -106,8 +107,15 @@ public class WaitingRidesFragment extends Fragment {
 
 
     private void onFilterClick(View v) {
+
+
         EditText d = (EditText) getView().findViewById(R.id.distance);
-        double distance = Double.parseDouble(d.getText().toString());
+        double distance;
+        if (TextUtils.isEmpty(d.getText().toString()))
+            distance = 50000; // default value
+        else
+            distance = Double.parseDouble(d.getText().toString());
+
         String driverLocation = ((TextView) getView().findViewById(R.id.curLocation)).getText().toString();
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRidesByDistance(driverLocation, distance, this);
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(), driver);
