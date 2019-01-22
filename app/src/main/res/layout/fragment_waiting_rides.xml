@@ -7,17 +7,13 @@
     android:orientation="vertical"
     tools:context=".WaitingRidesFragment">
 
-    <ListView
-        android:id="@+id/waiting_listView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp" />
 
     <EditText
         android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/filter_button"
         android:layout_below="@+id/locationButton"
+        android:layout_toRightOf="@+id/filter_button"
         android:hint="e.g 10 (km)" />
 
     <Button
@@ -32,7 +28,6 @@
         android:id="@+id/locationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/waiting_listView"
         android:onClick="locationButton_click"
         app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
@@ -40,11 +35,16 @@
         android:id="@+id/curLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/waiting_listView"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/locationButton"
         android:text="Pick your address"
         android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/waiting_listView"
+        android:layout_width="match_parent"
+        android:layout_height="467dp"
+        android:layout_below="@+id/filter_button" />
 
 
 </RelativeLayout>
