@@ -1,6 +1,8 @@
 package com.jct.oshri.drivergettaxi2019;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -107,20 +109,39 @@ public class WaitingRidesFragment extends Fragment {
 
 
     private void onFilterClick(View v) {
-
+        if (!isValidated()) return;
 
         EditText d = (EditText) getView().findViewById(R.id.distance);
-        double distance;
-        if (TextUtils.isEmpty(d.getText().toString()))
-            distance = 50000; // default value
-        else
-            distance = Double.parseDouble(d.getText().toString());
-
+        double distance = Double.parseDouble(d.getText().toString());
         String driverLocation = ((TextView) getView().findViewById(R.id.curLocation)).getText().toString();
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRidesByDistance(driverLocation, distance, this);
+
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(), driver);
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
+    }
+
+    private boolean isValidated() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext()).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        if (((EditText) getView().findViewById(R.id.distance)).getText().toString().length() == 0) {
+            alert.setMessage("distance is missing!");
+            alert.show();
+            return false;
+        }
+
+        if (((TextView) getView().findViewById(R.id.curLocation)).getText().toString().equals("Pick your address")) {
+            alert.setMessage("current location is missing!");
+            alert.show();
+            return false;
+        }
+
+        return true;
     }
 
 
