@@ -1,5 +1,7 @@
 package com.jct.oshri.drivergettaxi2019.model.backend;
 
+import android.content.Context;
+
 import com.jct.oshri.drivergettaxi2019.WaitingRidesFragment;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
@@ -53,6 +55,8 @@ public interface DB_manager {
      * @return List of rides of rides in a maximum amount of payment
      */
     public List<Ride> getRidesByPayment(float maxCost);
+
+    public void setContext(Context applicationContext);
 
     public interface Action<T> {
         void onSuccess(T obj);

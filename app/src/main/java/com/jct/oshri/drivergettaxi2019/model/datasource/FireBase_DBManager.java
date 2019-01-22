@@ -1,15 +1,24 @@
 package com.jct.oshri.drivergettaxi2019.model.datasource;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jct.oshri.drivergettaxi2019.LoginActivity;
+import com.jct.oshri.drivergettaxi2019.R;
 import com.jct.oshri.drivergettaxi2019.WaitingRidesFragment;
 import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
 import com.jct.oshri.drivergettaxi2019.model.backend.UpdateDriver_AsyncTask;
@@ -44,6 +53,7 @@ public class FireBase_DBManager implements DB_manager {
 
     private static ChildEventListener DriverRefChildEventListener;
     private static ChildEventListener RideRefChildEventListener;
+    Context ctx; // using in dataChanged notification
 
     static {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -83,6 +93,11 @@ public class FireBase_DBManager implements DB_manager {
 
     }
 
+    public void setContext(Context applicationContext) {
+        ctx = applicationContext;
+    }
+
+
     /**
      * @param notifyDataChange Listener for changes in rides
      */
@@ -103,6 +118,8 @@ public class FireBase_DBManager implements DB_manager {
                     //ride.setId(Integer.parseInt(id));
                     ridesList.add(ride);
                     notifyDataChange.OnDataChanged(ridesList);
+                    sendNotification();
+
                 }
 
                 @Override
@@ -377,5 +394,32 @@ public class FireBase_DBManager implements DB_manager {
 
         return (locationA.distanceTo(locationB)) / 1000;
     }
+
+    public void sendNotification() {
+
+        PendingIntent pIntent = PendingIntent.getActivity(ctx, 0, new Intent(), 0);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx, "123")
+                .setSmallIcon(R.drawable.taxi_driver_icon)
+                .setContentTitle("Notification Title")
+                .setContentText("Notification Content")
+                .setContentIntent(pIntent);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "123";
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            mNotificationManager.createNotificationChannel(channel);
+            mBuilder.setChannelId(channelId);
+        }
+
+        NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1234, mBuilder.build());
+    }
+
 
 }
