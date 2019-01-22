@@ -17,7 +17,7 @@ public class Ride implements Serializable {
     public String idDriver;
 
 
-    public Ride(OptionOfTrip oft, String source, String dest, String startTime, String finishTime, String nameOfClient, String phoneNumberOfClient, String emailOfClient, String id,String idDriver) {
+    public Ride(OptionOfTrip oft, String source, String dest, String startTime, String finishTime, String nameOfClient, String phoneNumberOfClient, String emailOfClient, String id, String idDriver) {
         this.status = oft;
         this.source = source;
         this.dest = dest;
@@ -27,12 +27,13 @@ public class Ride implements Serializable {
         this.phoneNumberOfClient = phoneNumberOfClient;
         this.emailOfClient = emailOfClient;
         this.id = id;
-        this.idDriver=idDriver;
+        this.idDriver = idDriver;
     }
 
     public Ride() {
 
     }
+
     public String getIdDriver() {
         return idDriver;
     }

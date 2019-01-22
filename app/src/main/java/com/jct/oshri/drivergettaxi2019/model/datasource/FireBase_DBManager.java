@@ -20,11 +20,13 @@ import com.jct.oshri.drivergettaxi2019.model.entities.OptionOfTrip;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class FireBase_DBManager implements DB_manager {
 
+    final int RATE_PER_KM = 30;
 
     static DatabaseReference driversRef;
     static List<Driver> driversList;
@@ -38,6 +40,16 @@ public class FireBase_DBManager implements DB_manager {
     Location locationA = new Location("A");//= new Location(from);
     Location locationB = new Location("B");//= new Location(to);
 
+    private static ChildEventListener DriverRefChildEventListener;
+    private static ChildEventListener RideRefChildEventListener;
+
+    static {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        driversRef = database.getReference("Drivers");
+        driversList = new ArrayList<>();
+        ridesRef = database.getReference("Rides");
+        ridesList = new ArrayList<>();
+    }
 
     public FireBase_DBManager() {
 
@@ -68,17 +80,6 @@ public class FireBase_DBManager implements DB_manager {
 
 
     }
-
-    static {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        driversRef = database.getReference("Drivers");
-        driversList = new ArrayList<>();
-        ridesRef = database.getReference("Rides");
-        ridesList = new ArrayList<>();
-    }
-
-    private static ChildEventListener DriverRefChildEventListener;
-    private static ChildEventListener RideRefChildEventListener;
 
     /**
      * @param notifyDataChange Listener for changes in rides
@@ -214,20 +215,13 @@ public class FireBase_DBManager implements DB_manager {
         }
     }
 
-
-
     public void updateRide(final Ride newRide) {
         new UpdateRide_AsyncTask().execute(newRide);
-    }
-
-    public void addDriver(final Driver newDriver) {
-        new UploadDriver_AsyncTask().execute(newDriver);
     }
 
     public void updateDriver(final Driver newDriver) {
         new UpdateDriver_AsyncTask().execute(newDriver);
     }
-
 
     public Driver checkLogin(String email, String password) {
         for (Driver driver : driversList) {
@@ -247,21 +241,15 @@ public class FireBase_DBManager implements DB_manager {
         return nameList;
     }
 
+    public void addDriver(final Driver newDriver) {
+        new UploadDriver_AsyncTask().execute(newDriver);
+    }
+
     @Override
     public List<Ride> getUnoccupiedRides() {
         List<Ride> unoccupiedRides = new ArrayList<>();
         for (Ride ride : ridesList) {
             if (ride.status == OptionOfTrip.UNOCCUPIED)
-                unoccupiedRides.add(ride);
-        }
-        return unoccupiedRides;
-    }
-
-    @Override
-    public List<Ride> getUnoccupiedRidesToSomeCity(String city) {
-        List<Ride> unoccupiedRides = new ArrayList<>();
-        for (Ride ride : ridesList) {
-            if (ride.status == OptionOfTrip.UNOCCUPIED && ride.dest.equals(city))
                 unoccupiedRides.add(ride);
         }
         return unoccupiedRides;
@@ -278,24 +266,24 @@ public class FireBase_DBManager implements DB_manager {
     }
 
     @Override
-    public List<String> getRidesByDriver(Driver sDriver) {
-        return null;
+    public List<Ride> getRidesByDriver(String driverId) {
+        List<Ride> rides = new ArrayList<>();
+        for (Ride ride : ridesList) {
+            if (ride.idDriver == driverId)
+                rides.add(ride);
+        }
+        return rides;
     }
 
-    @Override
-    public List<String> getUnoccupiedRidesByCity(String city) {
-        return null;
-    }
-
 
     @Override
-    public List<String> getRidesByDate(Driver sDriver) {
-        return null;
-    }
-
-    @Override
-    public List<String> getRidesByPayment(Driver sDriver) {
-        return null;
+    public List<Ride> getUnoccupiedRidesByCity(String city) {
+        List<Ride> unoccupiedRides = new ArrayList<>();
+        for (Ride ride : ridesList) {
+            if (ride.status == OptionOfTrip.UNOCCUPIED && ride.dest.toLowerCase().contains(city.toLowerCase()))
+                unoccupiedRides.add(ride);
+        }
+        return unoccupiedRides;
     }
 
     @Override
@@ -310,6 +298,27 @@ public class FireBase_DBManager implements DB_manager {
         }
         return resultRides;
     }
+
+    @Override
+    public List<Ride> getRidesByDate(Date date) {
+        return null;
+    }
+
+    @Override
+    public List<Ride> getRidesByPayment(float maxCost) {
+
+        float rideDistance, cost;
+        List<Ride> result = new ArrayList<>();
+
+        for (Ride ride : ridesList) {
+            rideDistance = getDistance(ride.getSource(), ride.getDest());
+            cost = RATE_PER_KM * rideDistance;
+            if (cost <= maxCost)
+                result.add(ride);
+        }
+        return result;
+    }
+
 
     /**
      * @param address1 - from

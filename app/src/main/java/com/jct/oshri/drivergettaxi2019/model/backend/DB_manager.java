@@ -4,6 +4,7 @@ import com.jct.oshri.drivergettaxi2019.WaitingRidesFragment;
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DB_manager {
@@ -19,44 +20,38 @@ public interface DB_manager {
     void addDriver(final Driver newDriver);
 
     /**
-     * @return List of keys of unoccupied rides
+     * @return List of rides of unoccupied rides
      */
     List<Ride> getUnoccupiedRides();
 
     /**
-     * @return List of keys of finished rides
+     * @return List of rides of finished rides
      */
     List<Ride> getFinishedRides();
 
     /**
-     * @return List of keys of rides of a specific Driver
+     * @return List of rides of rides of a specific Driver
      */
-    List<String> getRidesByDriver(Driver sDriver);
+    public List<Ride> getRidesByDriver(String driverId);
+    /**
+     * @return List of rides of unoccupied rides in a specific city
+     */
+    List<Ride> getUnoccupiedRidesByCity(String city);
 
     /**
-     * @return List of keys of unoccupied rides in a specific city
-     */
-    List<String> getUnoccupiedRidesByCity(String city);
-
-    /**
-     * @return List of keys of unoccupied rides in a specific distance from a Driver's location
+     * @return List of rides of unoccupied rides in a specific distance from a Driver's location
      */
     List<Ride> getUnoccupiedRidesByDistance(String driverLocation, double maxDistance, WaitingRidesFragment waitingRidesFragment);
 
     /**
-     * @return List of keys of rides by a date
+     * @return List of rides of rides by a date
      */
-    List<String> getRidesByDate(Driver sDriver);
-
+    public List<Ride> getRidesByDate(Date date);
     /**
-     * @return List of keys of rides in a maximum amount of payment
+     * @return List of rides of rides in a maximum amount of payment
      */
-    List<String> getRidesByPayment(Driver sDriver);
-
-    List<Ride> getUnoccupiedRidesToSomeCity(String city);
-
-
-        public interface Action<T> {
+    public List<Ride> getRidesByPayment(float maxCost);
+    public interface Action<T> {
         void onSuccess(T obj);
 
         void onFailure(Exception exception);
