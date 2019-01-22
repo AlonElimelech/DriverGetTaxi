@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
+import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
+import com.jct.oshri.drivergettaxi2019.model.datasource.FireBase_DBManager;
+import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.OptionOfTrip;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
@@ -21,11 +25,13 @@ public class TakeRideActivity extends AppCompatActivity {
     //String SendSMSDEST;
     Button takeButton;
     Ride r;
+    Driver driver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_ride);
+
 
         findViews();
     }
@@ -35,13 +41,15 @@ public class TakeRideActivity extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         r = (Ride) myIntent.getSerializableExtra("Ride");
+        driver = (Driver) myIntent.getSerializableExtra("Driver");
+
         name = findViewById(R.id.name_cus);
         name.setText("Name: " + r.nameOfClient);
 
         email = findViewById(R.id.email_cus);
         email.setText("Email: " + r.emailOfClient);
         phone = findViewById(R.id.phone_cus);
-        phone.setText("Phone NUmber: " + r.phoneNumberOfClient);
+        phone.setText("Phone Number: " + r.phoneNumberOfClient);
 
         takeButton = findViewById(R.id.TakeItButton);
         //SendSMSDEST = bundle.getString("PhoneNumber").toString();
@@ -97,9 +105,19 @@ public class TakeRideActivity extends AppCompatActivity {
 
 
     public void onTakeIt(View view) {
+
+        //update ride
+        r.setStatus(OptionOfTrip.IN_PROGGRESS);
+        r.setIdDriver(driver.getId());
+
+        DB_manager dBase = factoryMethod.getManager();
+
+        ((FireBase_DBManager)dBase).updateRide(r); // sending to DB
+
+
         Toast.makeText(getApplicationContext(), " Sent!",
                 Toast.LENGTH_LONG).show();
-        r.setStatus(OptionOfTrip.IN_PROGGRESS);
+
 
 
     }

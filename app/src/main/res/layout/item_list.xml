@@ -18,7 +18,27 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/timeRide"
+    android:id="@+id/timeRide"
+    android:layout_width="352dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:text="Time:"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="#000"
+    android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/source_cus"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="Time:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dest_cus"
         android:layout_width="352dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

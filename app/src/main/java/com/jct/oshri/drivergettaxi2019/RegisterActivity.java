@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         toast1.show();
 
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);  // go to custom activity (Main activity)
-        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
+        intent.putExtra("Driver", driver);
         startActivity(intent);
 
     }

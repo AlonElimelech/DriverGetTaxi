@@ -1,18 +1,10 @@
 package com.jct.oshri.drivergettaxi2019;
 
 
-import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +20,13 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.jct.oshri.drivergettaxi2019.model.backend.factoryMethod;
 import com.jct.oshri.drivergettaxi2019.model.datasource.FireBase_DBManager;
+import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static android.support.v4.content.ContextCompat.getSystemService;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +42,7 @@ public class WaitingRidesFragment extends Fragment {
     View v;
     LocationManager locationManager;
     AdapterListRides adapter;
+    Driver driver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,9 +55,13 @@ public class WaitingRidesFragment extends Fragment {
 
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
 
-        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
+        Intent myIntent = getActivity().getIntent();
+        driver = (Driver) myIntent.getSerializableExtra("Driver");
+
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(),driver);
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
+
 
         ImageButton locationButton = (ImageButton) v.findViewById(R.id.locationButton);
         locationButton.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +110,7 @@ public class WaitingRidesFragment extends Fragment {
         double distance = Double.parseDouble(d.getText().toString());
         String driverLocation = ((TextView) getView().findViewById(R.id.curLocation)).getText().toString();
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRidesByDistance(driverLocation, distance, this);
-        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager());
+        adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(), driver);
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
     }
