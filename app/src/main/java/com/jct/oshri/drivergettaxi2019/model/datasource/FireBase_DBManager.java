@@ -401,8 +401,8 @@ public class FireBase_DBManager implements DB_manager {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx, "123")
                 .setSmallIcon(R.drawable.taxi_driver_icon)
-                .setContentTitle("Notification Title")
-                .setContentText("Notification Content")
+                .setContentTitle("New Ride Available")
+                .setContentText("A new ride added to the system in those moments")
                 .setContentIntent(pIntent);
 
         NotificationManager mNotificationManager =
