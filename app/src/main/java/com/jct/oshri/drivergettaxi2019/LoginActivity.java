@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 // open custom window
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);  // go to custom activity (Main activity)
-                intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
+                intent.putExtra("Driver", driver);
                 startActivity(intent);
                 return;
 

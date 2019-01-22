@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent myIntent = getIntent();
-        driver = (Driver) myIntent.getSerializableExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver");
+        driver = (Driver) myIntent.getSerializableExtra("Driver");
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_exit) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);  // go to custom activity (Main activity)
-            intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
+            intent.putExtra("Driver", driver);
             startActivity(intent);
         }
 

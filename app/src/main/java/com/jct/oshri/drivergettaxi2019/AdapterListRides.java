@@ -2,7 +2,6 @@ package com.jct.oshri.drivergettaxi2019;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
 import java.util.List;
@@ -22,6 +22,7 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
     public List<Ride> ridesList;
     public List<Ride> originRidesList;
     private FragmentManager afragment;
+    Driver driver;
 
     /*
         public AdapterListRides(List<Ride> ridesList, Context context) {
@@ -31,11 +32,12 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
             this.originRidesList = ridesList;
         }
     */
-    public AdapterListRides(List<Ride> list, Context context, FragmentManager fragment) {
+    public AdapterListRides(List<Ride> list, Context context, FragmentManager fragment, Driver driver) {
         super(context, R.layout.item_list, list);
         this.context = context;
         this.ridesList = list;
         afragment = fragment;
+        this.driver=driver;
     }
 
     @Override
@@ -70,7 +72,10 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
             holder = new RideHolder();
             holder.nameCustomer = (TextView) v.findViewById(R.id.fullNameCustomer);
             holder.timeRide = (TextView) v.findViewById(R.id.timeRide);
+            holder.sourceRide =(TextView) v.findViewById(R.id.source_cus);
+            holder.destRide =(TextView) v.findViewById(R.id.dest_cus);
             holder.buttonRide = (Button) v.findViewById(R.id.InfoBt);
+
 
             v.setTag(holder);
         } else
@@ -78,6 +83,8 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
 
         holder.nameCustomer.setText("Name: " + ridesList.get(position).getNameOfClient());
         holder.timeRide.setText("Time: " + ridesList.get(position).getStartTime());
+        holder.sourceRide.setText("Source: " + ridesList.get(position).getSource());
+        holder.destRide.setText("Destination: " + ridesList.get(position).getDest());
         holder.buttonRide.setTag(R.integer.bRide_view, convertView);
         holder.buttonRide.setTag(R.integer.bRide_position, position);
         holder.buttonRide.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +96,7 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
 
                 Intent intent = new Intent(context, TakeRideActivity.class);
                 intent.putExtra("Ride", ridesList.get(pos));
+                intent.putExtra("Driver",driver);
                 context.startActivity(intent);
                 // save the changes
 
@@ -103,6 +111,8 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
     private static class RideHolder {
         public TextView nameCustomer;
         public TextView timeRide;
+        public TextView sourceRide;
+        public TextView destRide;
         public Button buttonRide;
     }
 
