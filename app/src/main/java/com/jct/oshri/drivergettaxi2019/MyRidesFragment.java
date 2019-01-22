@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.jct.oshri.drivergettaxi2019.model.backend.DB_manager;
@@ -29,6 +32,7 @@ public class MyRidesFragment extends Fragment {
     View v;
     AdapterMyRides adapter;
     Driver driver;
+
     public MyRidesFragment() {
         // Required empty public constructor
     }
@@ -45,13 +49,52 @@ public class MyRidesFragment extends Fragment {
         Intent myIntent = getActivity().getIntent();
         driver = (Driver) myIntent.getSerializableExtra("Driver");
 
+        ImageButton refreshButton = (ImageButton) v.findViewById(R.id.imageButton_myRides);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefreshRides(v);
+            }
+        });
+
+        Button buttonUpdate = (Button) v.findViewById(R.id.button_filter_myRides);
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFilterRides(v);
+            }
+        });
+
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDriver(driver.getId());
 
         adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
         alistView.setAdapter(adapter);
-        getActivity().setTitle("My Ride");
+        getActivity().setTitle("My Rides");
 
         return v;
+    }
+
+    private void onRefreshRides(View v) {
+        ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDriver(driver.getId());
+
+        adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
+        alistView.setAdapter(adapter);
+    }
+
+    private void onFilterRides(View v) {
+        String filter = (getView().findViewById(R.id.filter_type)).toString();
+        if (filter.contains(":")) {
+            ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDate(filter);
+            adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
+            alistView.setAdapter(adapter);
+        } else {
+            float price = Float.parseFloat(filter);
+            ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByPayment(price);
+            adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
+            alistView.setAdapter(adapter);
+        }
+
+
     }
 
 }

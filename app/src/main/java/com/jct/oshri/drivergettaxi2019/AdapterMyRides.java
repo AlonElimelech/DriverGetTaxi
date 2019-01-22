@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
@@ -82,6 +84,8 @@ public class AdapterMyRides extends ArrayAdapter<Ride> {
 
         return v;
     }
+
+
 
     private static class RideHolder {
         public TextView nameCustomer;

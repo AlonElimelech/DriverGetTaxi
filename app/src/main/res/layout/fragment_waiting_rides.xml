@@ -43,8 +43,9 @@
     <ListView
         android:id="@+id/waiting_listView"
         android:layout_width="match_parent"
-        android:layout_height="467dp"
-        android:layout_below="@+id/filter_button" />
+        android:layout_height="438dp"
+        android:layout_below="@+id/filter_button"
+        android:layout_marginTop="29dp" />
 
 
 </RelativeLayout>

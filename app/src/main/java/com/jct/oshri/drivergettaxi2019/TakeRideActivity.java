@@ -24,6 +24,7 @@ public class TakeRideActivity extends AppCompatActivity {
     TextView phone;
     //String SendSMSDEST;
     Button takeButton;
+    Button cancel;
     Ride r;
     Driver driver;
 
@@ -52,6 +53,7 @@ public class TakeRideActivity extends AppCompatActivity {
         phone.setText("Phone Number: " + r.phoneNumberOfClient);
 
         takeButton = findViewById(R.id.TakeItButton);
+        cancel=findViewById(R.id.cancel_TakeRide);
         //SendSMSDEST = bundle.getString("PhoneNumber").toString();
 
 
@@ -61,48 +63,17 @@ public class TakeRideActivity extends AppCompatActivity {
 
                 onTakeIt(v);
 
-                //SmsManager smsManager = SmsManager.getDefault();
-                // smsManager.sendTextMessage(SendSMSDEST, null, "Hello,Im your driver and I ready to give a service to you. I LOVE YOU!", null, null);
-
-
-                /*
-                new AsyncTask<Void, Void, String>() {
-                        @Override
-                        protected void onPostExecute(String idResult) {
-
-
-                            MyRidesFragment fragment = new MyRidesFragment();
-
-                            FragmentManager fragmentManager = getActivity().getFragmentManager();
-                            android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
-
-                            fragmentTransaction.replace(R.id.fram, fragment);
-                            fragmentTransaction.commit();
-
-
-
-
-
-                        }
-                        @Override
-                        protected String doInBackground(Void... params) {
-                            //factoryMethod.getManager().UpdateTravel(keyToDelete,DriverId,r);
-
-                            return "";
-
-                        }
-                    }.execute();
-                    */
-
-
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCancel(v);
             }
         });
 
 
     }
-
 
     public void onTakeIt(View view) {
 
@@ -122,5 +93,8 @@ public class TakeRideActivity extends AppCompatActivity {
 
     }
 
+    public void onCancel(View view) {
+        finish();
+    }
 }
 
