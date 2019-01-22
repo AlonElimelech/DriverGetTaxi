@@ -119,6 +119,7 @@ public class WaitingRidesFragment extends Fragment {
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(), driver);
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
+
     }
 
     private boolean isValidated() {
