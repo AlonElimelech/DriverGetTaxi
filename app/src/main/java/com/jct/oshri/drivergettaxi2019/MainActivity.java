@@ -112,10 +112,10 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
         } else if (id == R.id.nav_waiting_rides) {
             setTitle("Waiting Rides");
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("Driver", driver);
+            //Bundle bundle = new Bundle();
+            //bundle.putSerializable("Driver", driver);
             WaitingRidesFragment fragment = new WaitingRidesFragment();
-            fragment.setArguments(bundle);
+           // fragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();

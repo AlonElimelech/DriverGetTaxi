@@ -269,7 +269,7 @@ public class FireBase_DBManager implements DB_manager {
     public List<Ride> getRidesByDriver(String driverId) {
         List<Ride> rides = new ArrayList<>();
         for (Ride ride : ridesList) {
-            if (ride.idDriver == driverId)
+            if (ride.idDriver.equals(driverId))
                 rides.add(ride);
         }
         return rides;
