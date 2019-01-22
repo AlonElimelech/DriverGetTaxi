@@ -19,6 +19,8 @@ import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
 import com.jct.oshri.drivergettaxi2019.model.entities.OptionOfTrip;
 import com.jct.oshri.drivergettaxi2019.model.entities.Ride;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -299,9 +301,35 @@ public class FireBase_DBManager implements DB_manager {
         return resultRides;
     }
 
+    /**
+     * The function returns the rides that occurred before (!!) the requested date
+     *
+     * @param date
+     * @return
+     */
     @Override
-    public List<Ride> getRidesByDate(Date date) {
-        return null;
+    public List<Ride> getRidesByDate(String date) {
+
+        Date requestedTime, startTime;
+        String pattern = "HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        List<Ride> result = new ArrayList<>();
+
+        for (Ride ride : ridesList) {
+            try {
+                startTime = sdf.parse(ride.getStartTime());
+                requestedTime = sdf.parse(date);
+
+                if (startTime.before(requestedTime))
+                    result.add(ride);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return result;
     }
 
     @Override

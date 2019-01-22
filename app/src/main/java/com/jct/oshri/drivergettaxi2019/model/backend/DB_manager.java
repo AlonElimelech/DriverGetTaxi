@@ -33,6 +33,7 @@ public interface DB_manager {
      * @return List of rides of rides of a specific Driver
      */
     public List<Ride> getRidesByDriver(String driverId);
+
     /**
      * @return List of rides of unoccupied rides in a specific city
      */
@@ -46,11 +47,13 @@ public interface DB_manager {
     /**
      * @return List of rides of rides by a date
      */
-    public List<Ride> getRidesByDate(Date date);
+    public List<Ride> getRidesByDate(String date);
+
     /**
      * @return List of rides of rides in a maximum amount of payment
      */
     public List<Ride> getRidesByPayment(float maxCost);
+
     public interface Action<T> {
         void onSuccess(T obj);
 
