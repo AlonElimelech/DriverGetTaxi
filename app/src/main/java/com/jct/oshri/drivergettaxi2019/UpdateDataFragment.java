@@ -53,6 +53,7 @@ public class UpdateDataFragment extends Fragment {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(a);
                 onCancel(v);
             }
         });
@@ -72,9 +73,8 @@ public class UpdateDataFragment extends Fragment {
     }
 
     private void onCancel(View view) {
-        view.startAnimation(a);
         Intent intent = new Intent(getActivity(), MainActivity.class);  // go to custom activity (Main activity)
-        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
+        intent.putExtra("Driver", driver);
         startActivity(intent);
     }
 

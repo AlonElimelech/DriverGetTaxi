@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ public class TakeRideActivity extends AppCompatActivity {
     Button cancel;
     Ride r;
     Driver driver;
+
+    AlphaAnimation a = new AlphaAnimation(1F, 0.8F);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class TakeRideActivity extends AppCompatActivity {
 
         takeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                v.startAnimation(a);
                 onTakeIt(v);
             }
         });
@@ -61,6 +65,7 @@ public class TakeRideActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(a);
                 onCancel(v);
             }
         });
@@ -77,6 +82,9 @@ public class TakeRideActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), " Sent!",
                 Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(TakeRideActivity.this, MainActivity.class);  // go to custom activity (Main activity)
+        intent.putExtra("Driver", driver);
+        startActivity(intent);
     }
 
     public void onCancel(View view) {

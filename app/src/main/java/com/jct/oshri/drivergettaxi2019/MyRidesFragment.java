@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +33,7 @@ public class MyRidesFragment extends Fragment {
     View v;
     AdapterMyRides adapter;
     Driver driver;
+    AlphaAnimation a = new AlphaAnimation(1F, 0.8F);
 
     public MyRidesFragment() {
         // Required empty public constructor
@@ -53,6 +55,7 @@ public class MyRidesFragment extends Fragment {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(a);
                 onRefreshRides(v);
             }
         });
@@ -61,6 +64,7 @@ public class MyRidesFragment extends Fragment {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(a);
                 onFilterRides(v);
             }
         });
@@ -81,7 +85,8 @@ public class MyRidesFragment extends Fragment {
 
     private void onFilterRides(View v) {
 
-        String filter = (getView().findViewById(R.id.filter_type)).toString();
+        EditText filterEdit = (getView().findViewById(R.id.filter_type));
+        String filter = filterEdit.getText().toString();
         if (filter.contains(":")) {
 
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDate(filter);

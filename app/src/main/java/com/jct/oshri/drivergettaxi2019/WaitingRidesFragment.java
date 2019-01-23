@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,7 +46,7 @@ public class WaitingRidesFragment extends Fragment {
     LocationManager locationManager;
     AdapterListRides adapter;
     Driver driver;
-
+    AlphaAnimation a = new AlphaAnimation(1F, 0.8F);
     public WaitingRidesFragment() {
         // Required empty public constructor
     }
@@ -72,6 +73,7 @@ public class WaitingRidesFragment extends Fragment {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(a);
                 locationButton_click(v);
             }
         });
@@ -80,6 +82,7 @@ public class WaitingRidesFragment extends Fragment {
         buttonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(a);
                 onFilterClick(v);
             }
         });
