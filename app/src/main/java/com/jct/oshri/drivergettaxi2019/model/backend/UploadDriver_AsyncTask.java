@@ -27,7 +27,6 @@ public class UploadDriver_AsyncTask extends AsyncTask<Driver, Void, Void> {
                     DatabaseReference databaseReference = database.getReference("Drivers/" + key);
                     databaseReference.setValue(aDrive);
                 }
-
             }
 
             @Override
@@ -37,6 +36,4 @@ public class UploadDriver_AsyncTask extends AsyncTask<Driver, Void, Void> {
         userDriversRef.addListenerForSingleValueEvent(eventListener);
         return null;
     }
-
-
 }

@@ -53,7 +53,7 @@ public class FireBase_DBManager implements DB_manager {
 
     private static ChildEventListener DriverRefChildEventListener;
     private static ChildEventListener RideRefChildEventListener;
-    Context ctx; // using in dataChanged notification
+    private Context ctx; // using in dataChanged notification
 
     static {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -115,11 +115,9 @@ public class FireBase_DBManager implements DB_manager {
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                     Ride ride = dataSnapshot.getValue(Ride.class);
                     String id = dataSnapshot.getKey();
-                    //ride.setId(Integer.parseInt(id));
                     ridesList.add(ride);
                     notifyDataChange.OnDataChanged(ridesList);
                     sendNotification();
-
                 }
 
                 @Override
@@ -127,7 +125,6 @@ public class FireBase_DBManager implements DB_manager {
                     Ride ride = dataSnapshot.getValue(Ride.class);
                     String id = dataSnapshot.getKey();
                     ride.setId(id);
-
 
                     for (int i = 0; i < ridesList.size(); i++) {
                         if (ridesList.get(i).getId().equals(id)) {
@@ -420,6 +417,5 @@ public class FireBase_DBManager implements DB_manager {
         NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1234, mBuilder.build());
     }
-
 
 }

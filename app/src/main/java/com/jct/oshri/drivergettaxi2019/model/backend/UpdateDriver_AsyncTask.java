@@ -24,7 +24,6 @@ public class UpdateDriver_AsyncTask extends AsyncTask<Driver, Void, Void> {
                     DatabaseReference databaseReference = database.getReference("Drivers/" + key);
                     databaseReference.setValue(aDrive);
                 }
-
             }
 
             @Override

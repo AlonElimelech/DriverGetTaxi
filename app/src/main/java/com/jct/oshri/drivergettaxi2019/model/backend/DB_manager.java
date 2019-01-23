@@ -66,7 +66,6 @@ public interface DB_manager {
         void onProgress(String status, double percent);
     }
 
-
     public interface NotifyDataChange<T> {
         void OnDataChanged(T obj);
 

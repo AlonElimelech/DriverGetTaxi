@@ -22,6 +22,7 @@ public class TakeRideActivity extends AppCompatActivity {
     TextView name;
     TextView email;
     TextView phone;
+
     //String SendSMSDEST;
     Button takeButton;
     Button cancel;
@@ -32,11 +33,8 @@ public class TakeRideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_ride);
-
-
         findViews();
     }
-
 
     private void findViews() {
 
@@ -44,35 +42,28 @@ public class TakeRideActivity extends AppCompatActivity {
         r = (Ride) myIntent.getSerializableExtra("Ride");
         driver = (Driver) myIntent.getSerializableExtra("Driver");
 
+        takeButton = findViewById(R.id.TakeItButton);
+        cancel = findViewById(R.id.cancel_TakeRide);
         name = findViewById(R.id.name_cus);
-        name.setText("Name: " + r.nameOfClient);
-
         email = findViewById(R.id.email_cus);
-        email.setText("Email: " + r.emailOfClient);
         phone = findViewById(R.id.phone_cus);
+
+        name.setText("Name: " + r.nameOfClient);
+        email.setText("Email: " + r.emailOfClient);
         phone.setText("Phone Number: " + r.phoneNumberOfClient);
 
-        takeButton = findViewById(R.id.TakeItButton);
-        cancel=findViewById(R.id.cancel_TakeRide);
-        //SendSMSDEST = bundle.getString("PhoneNumber").toString();
-
-
         takeButton.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
-
                 onTakeIt(v);
-
             }
         });
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onCancel(v);
             }
         });
-
-
     }
 
     public void onTakeIt(View view) {
@@ -82,15 +73,10 @@ public class TakeRideActivity extends AppCompatActivity {
         r.setIdDriver(driver.getId());
 
         DB_manager dBase = factoryMethod.getManager();
-
-        ((FireBase_DBManager)dBase).updateRide(r); // sending to DB
-
+        ((FireBase_DBManager) dBase).updateRide(r); // sending to DB
 
         Toast.makeText(getApplicationContext(), " Sent!",
                 Toast.LENGTH_LONG).show();
-
-
-
     }
 
     public void onCancel(View view) {

@@ -37,10 +37,10 @@ public class MyRidesFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_my_rides, container, false);
 
@@ -66,7 +66,6 @@ public class MyRidesFragment extends Fragment {
         });
 
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDriver(driver.getId());
-
         adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
         alistView.setAdapter(adapter);
         getActivity().setTitle("My Rides");
@@ -76,25 +75,25 @@ public class MyRidesFragment extends Fragment {
 
     private void onRefreshRides(View v) {
         ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDriver(driver.getId());
-
         adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
         alistView.setAdapter(adapter);
     }
 
     private void onFilterRides(View v) {
+
         String filter = (getView().findViewById(R.id.filter_type)).toString();
         if (filter.contains(":")) {
+
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDate(filter);
             adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
             alistView.setAdapter(adapter);
+
         } else {
+
             float price = Float.parseFloat(filter);
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByPayment(price);
             adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
             alistView.setAdapter(adapter);
         }
-
-
     }
-
 }

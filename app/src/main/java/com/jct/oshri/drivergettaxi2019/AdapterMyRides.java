@@ -37,7 +37,6 @@ public class AdapterMyRides extends ArrayAdapter<Ride> {
         return ridesList.size();
     }
 
-
     public Ride getItem(int position) {
         return ridesList.get(position);
     }
@@ -52,7 +51,6 @@ public class AdapterMyRides extends ArrayAdapter<Ride> {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         View v = convertView;
-
         final AdapterMyRides.RideHolder holder;
 
         // First let's verify the convertView is not null
@@ -66,10 +64,8 @@ public class AdapterMyRides extends ArrayAdapter<Ride> {
             holder.emailCustomer = (TextView) v.findViewById(R.id.email_cus_myRides);
             holder.phoneCustomer = (TextView) v.findViewById(R.id.phone_cus_myRides);
             holder.timeRide = (TextView) v.findViewById(R.id.timeRide_myRides);
-            holder.sourceRide =(TextView) v.findViewById(R.id.source_cus_myRides);
-            holder.destRide =(TextView) v.findViewById(R.id.dest_cus_myRides);
-
-
+            holder.sourceRide = (TextView) v.findViewById(R.id.source_cus_myRides);
+            holder.destRide = (TextView) v.findViewById(R.id.dest_cus_myRides);
 
             v.setTag(holder);
         } else
@@ -85,8 +81,6 @@ public class AdapterMyRides extends ArrayAdapter<Ride> {
         return v;
     }
 
-
-
     private static class RideHolder {
         public TextView nameCustomer;
         public TextView emailCustomer;
@@ -94,7 +88,6 @@ public class AdapterMyRides extends ArrayAdapter<Ride> {
         public TextView timeRide;
         public TextView sourceRide;
         public TextView destRide;
-
     }
 
 }

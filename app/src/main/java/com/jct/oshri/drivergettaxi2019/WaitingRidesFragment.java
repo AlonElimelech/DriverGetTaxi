@@ -36,7 +36,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class WaitingRidesFragment extends Fragment {
 
-
     private static final int PLACE_PICKER_REQUEST = 1;
     private TextView curLocation;
 
@@ -46,6 +45,10 @@ public class WaitingRidesFragment extends Fragment {
     LocationManager locationManager;
     AdapterListRides adapter;
     Driver driver;
+
+    public WaitingRidesFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,7 +68,6 @@ public class WaitingRidesFragment extends Fragment {
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
 
-
         ImageButton locationButton = (ImageButton) v.findViewById(R.id.locationButton);
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +83,6 @@ public class WaitingRidesFragment extends Fragment {
                 onFilterClick(v);
             }
         });
-
 
         return v;
     }
@@ -107,7 +108,6 @@ public class WaitingRidesFragment extends Fragment {
         }
     }
 
-
     private void onFilterClick(View v) {
         if (!isValidated()) return;
 
@@ -119,7 +119,6 @@ public class WaitingRidesFragment extends Fragment {
         adapter = new AdapterListRides(ridesList, getContext(), getChildFragmentManager(), driver);
         alistView.setAdapter(adapter);
         getActivity().setTitle("Choose a ride");
-
     }
 
     private boolean isValidated() {
@@ -144,54 +143,4 @@ public class WaitingRidesFragment extends Fragment {
 
         return true;
     }
-
-
-
-    /*
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.v = view;
-        progress = new ProgressDialog(getActivity());
-        progress.setTitle("Loading");
-        progress.setMessage("Syncing");
-        progress.setCancelable(false);
-        progress.show();
-        init();
-        loaddata();
-    }
-
-    private void init() {
-        alistView = v.findViewById(R.id.waiting_listView);
-        ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getUnoccupiedRides();
-        /*
-        dBase.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSet.clear();
-                mDataKey.clear();
-                for (DataSnapshot single : dataSnapshot.getChildren()) {
-                    dataSet.add(single.getValue().toString());
-                    mDataKey.add(single.getKey().toString());
-                }
-                AdapterListRides itemsAdapter = new AdapterListRides(factoryMethod.getManager().getUnoccupiedRides(), getContext(), getChildFragmentManager());
-                listRides.setAdapter(itemsAdapter);
-                progress.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void loaddata() {
-    }
-    */
-
-    public WaitingRidesFragment() {
-        // Required empty public constructor
-    }
-
 }

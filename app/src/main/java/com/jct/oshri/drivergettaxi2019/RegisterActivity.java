@@ -31,8 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onSignUp(View view) {
+
         view.startAnimation(a);
-        // check inputs - all attributes filled
         if (!isValidated()) return;
 
         Toast toast = Toast.makeText(getApplicationContext(), "Sending..", Toast.LENGTH_SHORT);
@@ -47,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         String password = ((EditText) findViewById(R.id.password)).getText().toString();
 
         Driver driver = new Driver(firstName, LastName, id, phoneNumber, email, creditNumber, password);
-
         DB_manager dBase = factoryMethod.getManager();
         dBase.addDriver(driver); // sending to DB
 
@@ -57,10 +56,11 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);  // go to custom activity (Main activity)
         intent.putExtra("Driver", driver);
         startActivity(intent);
-
     }
 
-
+    /**
+     * @return True if all attributes are filled
+     */
     private boolean isValidated() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this).setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -125,7 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
             alert.show();
             return false;
         }
-
 
         return true;
     }

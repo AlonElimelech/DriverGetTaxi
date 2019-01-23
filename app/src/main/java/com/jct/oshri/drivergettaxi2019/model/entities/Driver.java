@@ -3,6 +3,7 @@ package com.jct.oshri.drivergettaxi2019.model.entities;
 import java.io.Serializable;
 
 public class Driver implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public String firstName;
@@ -13,7 +14,7 @@ public class Driver implements Serializable {
     public String creditNumber;
     public String password;
 
-    public Driver(String firstName, String lastName, String id, String phoneNumber, String email, String creditNumber,String password) {
+    public Driver(String firstName, String lastName, String id, String phoneNumber, String email, String creditNumber, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -81,6 +82,4 @@ public class Driver implements Serializable {
     public void setCreditNumber(String creditNumber) {
         this.creditNumber = creditNumber;
     }
-
-
 }

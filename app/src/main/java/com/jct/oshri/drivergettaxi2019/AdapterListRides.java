@@ -24,27 +24,18 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
     private FragmentManager afragment;
     Driver driver;
 
-    /*
-        public AdapterListRides(List<Ride> ridesList, Context context) {
-            super(context, R.layout.fragment_waiting_rides, ridesList);
-            this.context = context;
-            this.ridesList = ridesList;
-            this.originRidesList = ridesList;
-        }
-    */
     public AdapterListRides(List<Ride> list, Context context, FragmentManager fragment, Driver driver) {
         super(context, R.layout.item_list, list);
         this.context = context;
         this.ridesList = list;
         afragment = fragment;
-        this.driver=driver;
+        this.driver = driver;
     }
 
     @Override
     public int getCount() {
         return ridesList.size();
     }
-
 
     public Ride getItem(int position) {
         return ridesList.get(position);
@@ -72,12 +63,12 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
             holder = new RideHolder();
             holder.nameCustomer = (TextView) v.findViewById(R.id.fullNameCustomer);
             holder.timeRide = (TextView) v.findViewById(R.id.timeRide);
-            holder.sourceRide =(TextView) v.findViewById(R.id.source_cus);
-            holder.destRide =(TextView) v.findViewById(R.id.dest_cus);
+            holder.sourceRide = (TextView) v.findViewById(R.id.source_cus);
+            holder.destRide = (TextView) v.findViewById(R.id.dest_cus);
             holder.buttonRide = (Button) v.findViewById(R.id.InfoBt);
 
-
             v.setTag(holder);
+
         } else
             holder = (RideHolder) v.getTag();
 
@@ -96,14 +87,11 @@ public class AdapterListRides extends ArrayAdapter<Ride> {
 
                 Intent intent = new Intent(context, TakeRideActivity.class);
                 intent.putExtra("Ride", ridesList.get(pos));
-                intent.putExtra("Driver",driver);
+                intent.putExtra("Driver", driver);
                 context.startActivity(intent);
                 // save the changes
-
-
             }
         });
-
 
         return v;
     }

@@ -31,7 +31,6 @@ public class Ride implements Serializable {
     }
 
     public Ride() {
-
     }
 
     public String getIdDriver() {

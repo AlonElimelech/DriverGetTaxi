@@ -25,20 +25,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         Intent myIntent = getIntent();
         driver = (Driver) myIntent.getSerializableExtra("Driver");
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity
 
         TextView name = header_nav.findViewById(R.id.textView_name);
         name.setText(upperFirstName + " " + upperLastName);
-
-
     }
 
     @Override
@@ -104,18 +102,20 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();
+
         } else if (id == R.id.nav_my_rides) {
             setTitle("my Rides");
             MyRidesFragment fragment = new MyRidesFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();
+
         } else if (id == R.id.nav_waiting_rides) {
             setTitle("Waiting Rides");
             //Bundle bundle = new Bundle();
             //bundle.putSerializable("Driver", driver);
             WaitingRidesFragment fragment = new WaitingRidesFragment();
-           // fragment.setArguments(bundle);
+            // fragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram, fragment);
             fragmentTransaction.commit();

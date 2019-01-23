@@ -1,6 +1,5 @@
 package com.jct.oshri.drivergettaxi2019;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,14 +23,13 @@ import com.jct.oshri.drivergettaxi2019.model.entities.Driver;
  * A simple {@link Fragment} subclass.
  */
 public class UpdateDataFragment extends Fragment {
+
     Driver driver;
     String phoneNumber;
     String email;
     String creditNumber;
     String password;
-    AlphaAnimation a =new  AlphaAnimation(1F,0.8F);
-
-
+    AlphaAnimation a = new AlphaAnimation(1F, 0.8F);
 
     public UpdateDataFragment() {
         // Required empty public constructor
@@ -40,8 +38,8 @@ public class UpdateDataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update_data, container, false);
         Button buttonUpdate = (Button) view.findViewById(R.id.button_update);
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +57,6 @@ public class UpdateDataFragment extends Fragment {
             }
         });
 
-
         driver = (Driver) (getArguments().getSerializable("Driver"));
         EditText phoneNumber = view.findViewById(R.id.phoneNumber);
         EditText email = view.findViewById(R.id.email);
@@ -72,44 +69,38 @@ public class UpdateDataFragment extends Fragment {
         password.setText(driver.password);
 
         return view;
-
-
     }
 
     private void onCancel(View view) {
         view.startAnimation(a);
         Intent intent = new Intent(getActivity(), MainActivity.class);  // go to custom activity (Main activity)
-        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver",driver);
+        intent.putExtra("com.jct.oshri.drivergettaxi2019.model.entities.Driver", driver);
         startActivity(intent);
     }
 
-
     public void onUpdate(View view) {
         view.startAnimation(a);
-        // check inputs - all attributes filled
         if (!isValidated()) return;
 
         Toast toast = Toast.makeText(getActivity(), "Sending..", Toast.LENGTH_SHORT);
         toast.show();
 
+        phoneNumber = ((EditText) getView().findViewById(R.id.phoneNumber)).getText().toString();
+        email = ((EditText) getView().findViewById(R.id.email)).getText().toString();
+        creditNumber = ((EditText) getView().findViewById(R.id.creditNumber)).getText().toString();
+        password = ((EditText) getView().findViewById(R.id.password)).getText().toString();
 
-         phoneNumber = ((EditText) getView().findViewById(R.id.phoneNumber)).getText().toString();
-         email = ((EditText) getView().findViewById(R.id.email)).getText().toString();
-         creditNumber = ((EditText) getView().findViewById(R.id.creditNumber)).getText().toString();
-         password = ((EditText) getView().findViewById(R.id.password)).getText().toString();
-
-         Driver newDriver = new Driver(driver.firstName, driver.lastName, driver.id, phoneNumber, email, creditNumber, password);
-
+        Driver newDriver = new Driver(driver.firstName, driver.lastName, driver.id, phoneNumber, email, creditNumber, password);
         DB_manager dBase = factoryMethod.getManager();
-
-        ((FireBase_DBManager)dBase).updateDriver(newDriver); // sending to DB
+        ((FireBase_DBManager) dBase).updateDriver(newDriver); // sending to DB
 
         Toast toast1 = Toast.makeText(getActivity(), "Updating..", Toast.LENGTH_SHORT);
         toast1.show();
-
-
     }
 
+    /**
+     * check inputs - return True if all attributes are filled
+     */
     private boolean isValidated() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -131,7 +122,6 @@ public class UpdateDataFragment extends Fragment {
             alert.show();
             return false;
         }
-
 
         if (((EditText) getView().findViewById(R.id.creditNumber)).getText().toString().length() == 0) {
             alert.setMessage("credit number is missing!");
@@ -158,7 +148,6 @@ public class UpdateDataFragment extends Fragment {
             alert.show();
             return false;
         }
-
 
         return true;
     }

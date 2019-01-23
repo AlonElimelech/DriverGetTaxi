@@ -27,7 +27,6 @@ public class UpdateRide_AsyncTask extends AsyncTask<Ride, Void, Void> {
                     DatabaseReference databaseReference = database.getReference("Rides/" + key);
                     databaseReference.setValue(aRide);
                 }
-
             }
 
             @Override
