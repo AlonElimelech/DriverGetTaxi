@@ -48,8 +48,8 @@ public class FireBase_DBManager implements DB_manager {
     // variables for distance
     Geocoder coder;
     List<Address> address;
-    Location locationA = new Location("A");//= new Location(from);
-    Location locationB = new Location("B");//= new Location(to);
+    Location locationA;
+    Location locationB;
 
     private static ChildEventListener DriverRefChildEventListener;
     private static ChildEventListener RideRefChildEventListener;
@@ -64,6 +64,9 @@ public class FireBase_DBManager implements DB_manager {
     }
 
     public FireBase_DBManager() {
+
+        locationA = new Location("A");//= new Location(from);
+        locationB = new Location("B");//= new Location(to);
 
         notifyToRidesList(new NotifyDataChange<List<Ride>>() {
             @Override
@@ -95,6 +98,7 @@ public class FireBase_DBManager implements DB_manager {
 
     public void setContext(Context applicationContext) {
         ctx = applicationContext;
+        coder = new Geocoder(ctx.getApplicationContext());
     }
 
 
@@ -304,7 +308,7 @@ public class FireBase_DBManager implements DB_manager {
 
     @Override
     public List<Ride> getUnoccupiedRidesByDistance(String driverLocation, double maxDistance, WaitingRidesFragment frag) {
-        coder = new Geocoder(frag.getContext());
+
         List<Ride> resultRides = new ArrayList<>();
 
         for (Ride ride : ridesList) {
@@ -356,7 +360,7 @@ public class FireBase_DBManager implements DB_manager {
         for (Ride ride : ridesList) {
             rideDistance = getDistance(ride.getSource(), ride.getDest());
             cost = RATE_PER_KM * rideDistance;
-            if (cost <= maxCost)
+            if (cost < maxCost)
                 result.add(ride);
         }
         return result;
