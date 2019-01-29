@@ -90,12 +90,12 @@ public class MyRidesFragment extends Fragment {
         if (filter.contains(":")) {
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDate(filter);
             for (Ride ride : ridesList) {
-                if (ride.idDriver.equals(driver.id))
+                if (ride.getIdDriver().equals(driver.getId()))
                     resultList.add(ride);
             }
 
 
-            adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
+            adapter = new AdapterMyRides(resultList, getContext(), getChildFragmentManager());
             alistView.setAdapter(adapter);
 
         } else {
@@ -103,10 +103,10 @@ public class MyRidesFragment extends Fragment {
             float price = Float.parseFloat(filter);
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByPayment(price);
             for (Ride ride : ridesList) {
-                if (ride.idDriver.equals(driver.id))
+                if (ride.getIdDriver().equals(driver.getId()))
                     resultList.add(ride);
             }
-            adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
+            adapter = new AdapterMyRides(resultList, getContext(), getChildFragmentManager());
             alistView.setAdapter(adapter);
         }
     }
