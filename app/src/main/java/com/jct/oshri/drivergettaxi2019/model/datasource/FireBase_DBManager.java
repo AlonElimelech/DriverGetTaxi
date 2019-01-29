@@ -346,6 +346,7 @@ public class FireBase_DBManager implements DB_manager {
         return result;
     }
 
+
     @Override
     public List<Ride> getRidesByPayment(float maxCost) {
 

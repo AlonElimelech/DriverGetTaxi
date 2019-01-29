@@ -84,12 +84,17 @@ public class MyRidesFragment extends Fragment {
     }
 
     private void onFilterRides(View v) {
-
+        List<Ride> resultList = new ArrayList<>();
         EditText filterEdit = (getView().findViewById(R.id.filter_type));
         String filter = filterEdit.getText().toString();
         if (filter.contains(":")) {
-
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByDate(filter);
+            for (Ride ride : ridesList) {
+                if (ride.idDriver.equals(driver.id))
+                    resultList.add(ride);
+            }
+
+
             adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
             alistView.setAdapter(adapter);
 
@@ -97,6 +102,10 @@ public class MyRidesFragment extends Fragment {
 
             float price = Float.parseFloat(filter);
             ridesList = ((FireBase_DBManager) factoryMethod.getManager()).getRidesByPayment(price);
+            for (Ride ride : ridesList) {
+                if (ride.idDriver.equals(driver.id))
+                    resultList.add(ride);
+            }
             adapter = new AdapterMyRides(ridesList, getContext(), getChildFragmentManager());
             alistView.setAdapter(adapter);
         }
